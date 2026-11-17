@@ -3,427 +3,443 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1.0">
-<title>Happy Birthday Nandani ❤️</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Happy Birthday Nandani I love you</title>
 
 <style>
-*{margin:0;padding:0;box-sizing:border-box}
+*{
+  margin:0;
+  padding:0;
+  box-sizing:border-box;
+}
 
 body{
- font-family:Arial,sans-serif;
- text-align:center;
- color:white;
- min-height:100vh;
- background:linear-gradient(135deg,#ff416c,#ff85a1,#8e44ad);
- overflow-x:hidden;
+  font-family:Arial,sans-serif;
+  min-height:100vh;
+  overflow-x:hidden;
+  background:linear-gradient(135deg,#ff758c,#ffb199,#ffd6e0);
+  color:#fff;
+  text-align:center;
 }
 
-/* TOP SCROLLING */
-.top-scroll{
- position:sticky;
- top:0;
- z-index:10;
- background:#c90050;
- padding:14px 0;
- overflow:hidden;
- border-bottom:2px solid white;
+/* LOGIN */
+#login{
+  min-height:100vh;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  padding:20px;
 }
 
-.top-scroll div{
- white-space:nowrap;
- font-size:18px;
- font-weight:bold;
- animation:slide 13s linear infinite;
+.login-box{
+  width:100%;
+  max-width:350px;
+  padding:30px 22px;
+  border-radius:22px;
+  background:rgba(255,255,255,.22);
+  box-shadow:0 8px 30px rgba(0,0,0,.2);
+  backdrop-filter:blur(10px);
 }
 
-@keyframes slide{
- from{transform:translateX(100%)}
- to{transform:translateX(-100%)}
+.login-box h1{
+  font-size:28px;
+  margin-bottom:15px;
+  color:#fff;
 }
 
-/* BACKGROUND TEXT */
-.bg{
- position:fixed;
- inset:0;
- z-index:0;
- overflow:hidden;
- pointer-events:none;
-}
-
-.bg span{
- position:absolute;
- white-space:nowrap;
- font-size:23px;
- font-weight:bold;
- opacity:.17;
- animation:up 14s linear infinite;
-}
-
-@keyframes up{
- from{transform:translateY(110vh)}
- to{transform:translateY(-120vh)}
-}
-
-.container{
- position:relative;
- z-index:2;
- width:93%;
- max-width:470px;
- margin:25px auto;
- padding:25px 15px;
- border-radius:25px;
- background:#ffffff30;
- border:2px solid #ffffff80;
- box-shadow:0 10px 35px #68003580;
-}
-
-h1{font-size:28px;margin:15px 0}
-
-.name{
- color:#fff700;
- font-size:27px;
- font-weight:bold;
- text-shadow:0 0 12px red;
+.login-box p{
+  margin-bottom:18px;
 }
 
 input{
- width:90%;
- padding:15px;
- border:none;
- border-radius:12px;
- margin:15px 0;
- font-size:17px;
- text-align:center;
+  width:100%;
+  padding:13px;
+  border:0;
+  outline:none;
+  border-radius:10px;
+  font-size:16px;
+  text-align:center;
+  margin-bottom:15px;
 }
 
 button{
- background:#ff0055;
- color:white;
- border:2px solid white;
- border-radius:30px;
- padding:14px 25px;
- font-size:17px;
- font-weight:bold;
- margin:15px;
- cursor:pointer;
+  padding:12px 25px;
+  border:0;
+  border-radius:25px;
+  background:#ff2675;
+  color:white;
+  font-size:16px;
+  font-weight:bold;
+  cursor:pointer;
+}
+
+#error{
+  color:#fff;
+  margin-top:12px;
+  font-weight:bold;
+}
+
+/* BIRTHDAY PAGE */
+#birthday{
+  display:none;
+  min-height:100vh;
+  padding-bottom:30px;
+  position:relative;
+  z-index:2;
+}
+
+.top-scroll{
+  display:none;
+  overflow:hidden;
+  white-space:nowrap;
+  background:#ff176b;
+  padding:13px 0;
+  font-size:18px;
+  font-weight:bold;
+  position:relative;
+  z-index:5;
+}
+
+.top-scroll span{
+  display:inline-block;
+  padding-left:100%;
+  animation:scroll 18s linear infinite;
+}
+
+@keyframes scroll{
+  from{transform:translateX(0);}
+  to{transform:translateX(-100%);}
+}
+
+.content{
+  position:relative;
+  z-index:3;
+  padding:20px 15px;
+}
+
+h1{
+  font-size:32px;
+  margin:15px 0;
+  text-shadow:2px 3px 5px #a90045;
+}
+
+.name{
+  font-size:42px;
+  color:#fff000;
+  font-weight:bold;
+  text-shadow:2px 3px 5px #a90045;
+  margin:15px 0;
 }
 
 .date{
- background:#ffffff30;
- padding:15px;
- border-radius:15px;
- margin:20px 0;
- line-height:2;
+  font-size:18px;
+  margin:12px;
+  font-weight:bold;
+}
+
+.decorations{
+  font-size:38px;
+  line-height:1.8;
+  margin:15px 0;
 }
 
 .card{
- background:#ffffff30;
- border:1px solid white;
- border-radius:20px;
- margin:20px 0;
- padding:20px 10px;
+  max-width:650px;
+  margin:18px auto;
+  padding:22px;
+  border-radius:20px;
+  background:rgba(255,255,255,.23);
+  box-shadow:0 5px 20px rgba(120,0,50,.15);
+  backdrop-filter:blur(5px);
 }
 
-.emoji{
- font-size:65px;
- margin:15px;
- animation:bounce 2s infinite;
+.card h2{
+  color:#fff000;
+  margin-bottom:12px;
 }
 
-@keyframes bounce{
- 50%{transform:translateY(-10px)}
-}
-
-.love{
- color:#fff700;
- font-size:30px;
- font-weight:bold;
- margin:25px 0;
- text-shadow:0 0 12px red;
-}
-
-.message{
- font-size:17px;
- line-height:1.9;
- margin:20px 5px;
+.card p{
+  font-size:17px;
+  line-height:1.8;
 }
 
 .shayari{
- background:#ffffff30;
- border-radius:18px;
- padding:18px;
- margin:20px 0;
- line-height:2;
+  font-size:18px;
+  line-height:1.9;
+  color:white;
 }
 
-.footer{
- margin-top:30px;
- padding:20px;
- border-top:1px solid white;
+.clock{
+  font-size:19px;
+  font-weight:bold;
+  margin:15px;
 }
 
-#birthday{display:none}
-
-#error{
- color:#fff700;
- font-weight:bold;
- margin:10px;
+/* BACKGROUND SCROLLING TEXT */
+#backgroundText{
+  display:none;
+  position:fixed;
+  inset:0;
+  overflow:hidden;
+  pointer-events:none;
+  z-index:1;
 }
 
-.floating{
- position:fixed;
- bottom:-50px;
- font-size:28px;
- z-index:5;
- animation:float 6s linear forwards;
- pointer-events:none;
+.bg-line{
+  position:absolute;
+  white-space:nowrap;
+  font-size:20px;
+  font-weight:bold;
+  color:rgba(255,255,255,.25);
+  animation:bgScroll 20s linear infinite;
 }
 
-@keyframes float{
- to{
- transform:translateY(-110vh) rotate(360deg);
- opacity:0;
- }
+@keyframes bgScroll{
+  from{transform:translateX(100vw);}
+  to{transform:translateX(-120%);}
+}
+
+/* FLOATING HEARTS */
+.float-item{
+  position:fixed;
+  bottom:-40px;
+  z-index:4;
+  pointer-events:none;
+  animation:floatUp 7s linear forwards;
+}
+
+@keyframes floatUp{
+  0%{
+    transform:translateY(0) rotate(0deg);
+    opacity:1;
+  }
+  100%{
+    transform:translateY(-110vh) rotate(360deg);
+    opacity:0;
+  }
+}
+
+footer{
+  padding:20px 10px;
+  font-size:14px;
+  position:relative;
+  z-index:3;
 }
 </style>
 </head>
 
 <body>
 
-<div class="top-scroll">
-<div>
-❤️ HAPPY BIRTHDAY NANDANI ❤️
-&nbsp;&nbsp; 💖 I LOVE YOU NANDANI 💖
-&nbsp;&nbsp; 🌹 YOU ARE SPECIAL 🌹
-</div>
-</div>
-
-<div class="bg" id="background"></div>
-
-<div class="container">
-
 <!-- PASSWORD SCREEN -->
-
 <div id="login">
+  <div class="login-box">
+    <h1>🎁 Birthday Surprise 🎁</h1>
+    <p>Enter Password to Open Surprise ❤️</p>
 
-<div class="emoji">🔐💝🎀</div>
+    <input
+      type="password"
+      id="password"
+      placeholder="Enter Password"
+      autocomplete="off"
+    >
 
-<h1>Welcome Special Person</h1>
-
-<div class="name">Nandani ❤️</div>
-
-<p class="message">
-This Surprise Is Only For You!
-<br>
-Enter Your Name To Open Your Gift 💖
-</p>
-
-<input
- type="password"
- id="password"
- placeholder="Enter Password"
- autocomplete="off"
->
-
-<br>
-
-<button onclick="checkPassword()">
-🔓 Open My Surprise
-</button>
-
-<p id="error"></p>
-
+    <button onclick="checkPassword()">Open Surprise 💖</button>
+    <div id="error"></div>
+  </div>
 </div>
 
-<!-- BIRTHDAY SCREEN -->
+<!-- BACKGROUND TEXT - HIDDEN BEFORE LOGIN -->
+<div id="backgroundText"></div>
 
+<!-- BIRTHDAY PAGE -->
 <div id="birthday">
 
-<div class="emoji">🎂🎈🎀</div>
+  <div class="top-scroll" id="topScroll">
+    <span>
+      🎂 HAPPY BIRTHDAY NANDANI 💖
+      I LOVE YOU NANDANI ❤️
+      YOU ARE SO SPECIAL 🌹
+      KEEP SMILING ALWAYS 🌸
+      YOU DESERVE THE BEST 🎁
+    </span>
+  </div>
 
-<h1>✨ Happy Birthday ✨</h1>
+  <div class="content">
 
-<div class="name">Nandani ❤️</div>
+    <div class="decorations">
+      🌹 💐 🌷 🌸 🌺
+    </div>
 
-<div class="date">
-📅 18 November 2026
-<br>
-⏰ <span id="clock"></span>
-<br>
-💕 A Beautiful Day For A Beautiful Soul
-</div>
+    <h1>🎉 HAPPY BIRTHDAY 🎉</h1>
 
-<p class="message">
-Today is not just another day.
-It is the birthday of someone truly special.
-May your life always shine with happiness,
-love and beautiful memories. ❤️
-</p>
+    <div class="name">NANDANI I Love You 💖💝💖</div>
 
-<div class="love">
-HAPPY BIRTHDAY NANDANI ❤️
-</div>
+    <div class="date">
+      🎂 18 November 2026 🎂
+    </div>
 
-<div class="card">
-<h2>🌹 Flowers For You</h2>
-<div class="emoji">💐🌹🌷🌸</div>
-<p>May your life bloom like beautiful flowers!</p>
-</div>
+    <div class="decorations">
+      🎁 🍫 🍬 🎂 🍭 💝
+    </div>
 
-<div class="card">
-<h2>🍫 Sweet Chocolate</h2>
-<div class="emoji">🍫🍬🍫</div>
-<p>A little sweetness for your special day!</p>
-</div>
+    <div class="card">
+      <h2>💖 Birthday Wishes 💖</h2>
+      <p>
+        Happy Birthday Nandani! 🎂<br>
+        May your life always be filled with happiness,
+        love, success and beautiful moments.<br>
+        Keep smiling and always follow your dreams.
+        You deserve all the wonderful things in life. 🌸
+      </p>
+    </div>
 
-<div class="card">
-<h2>🎂 Birthday Cake</h2>
-<div class="emoji">🎂🕯️🎂</div>
-<p>Make a wish and keep smiling forever!</p>
-</div>
+    <div class="card">
+      <h2>🌹 Special Shayari 1 🌹</h2>
+      <div class="shayari">
+        फूलों की तरह महकती रहो,<br>
+        सितारों की तरह चमकती रहो।<br>
+        हर दिन खुशियों से भरा रहे,<br>
+        जन्मदिन पर बस मुस्कुराती रहो। ❤️
+      </div>
+    </div>
 
-<div class="card">
-<h2>🎁 Special Gift</h2>
-<div class="emoji">🎁💝🎀</div>
-<p>A special surprise, just for you!</p>
-</div>
+    <div class="card">
+      <h2>💐 Special Shayari 2 💐</h2>
+      <div class="shayari">
+        आपकी हर सुबह खास हो,<br>
+        हर सपना आपके पास हो।<br>
+        खुशियों से भरा रहे जीवन आपका,<br>
+        जन्मदिन का हर पल यादगार हो। 🌷
+      </div>
+    </div>
 
-<div class="love">
-I LOVE YOU NANDANI ❤️
-</div>
+    <div class="card">
+      <h2>🎁 A Special Message 🎁</h2>
+      <p>
+        Nandani, today is your special day.
+        May every new day bring new hopes,
+        new opportunities and countless reasons
+        to smile. Stay happy and keep shining! ✨
+      </p>
+    </div>
 
-<h2>💌 A Special Message</h2>
+    <div class="clock" id="clock"></div>
 
-<p class="message">
-You are a beautiful part of my thoughts.
-Your smile makes every moment brighter.
-I wish you endless happiness,
-success and countless reasons to smile.
+    <div class="decorations">
+      🌹 💖 🎂 💝 🍫 🌸
+    </div>
 
-Always stay happy and keep shining.
-You deserve all the beautiful things
-this world has to offer. ❤️
-</p>
+  </div>
 
-<div class="shayari">
-🌹 Shayari 1 🌹
-<br><br>
-Teri muskurahat meri pehchaan ban jaaye,
-Teri khushi meri jaan ban jaaye,
-Har dua mein maanga hai tujhe,
-Tera har janamdin yaadgaar ban jaaye. ❤️
-</div>
-
-<div class="shayari">
-💖 Shayari 2 💖
-<br><br>
-Teri zindagi phoolon se sajti rahe,
-Har khushi tere kadmon mein rehti rahe,
-Janamdin par bas yahi dua hai,
-Teri muskaan hamesha yunhi chamakti rahe. 🌹
-</div>
-
-<div class="emoji">💐🍫🎂❤️</div>
-
-<h2>Once Again Happy Birthday!</h2>
-
-<div class="love">
-I LOVE YOU NANDANI ❤️
-</div>
-
-</div>
-
-<div class="footer">
-Made With Endless Love ❤️
-<br><br>
-<b>Created by Amit Kumar Singh</b>
-</div>
+  <footer>
+    Created by Amit Kumar Singh ❤️
+  </footer>
 
 </div>
 
 <script>
+let surpriseStarted = false;
 
-// Background scrolling
-let bg=document.getElementById("background");
-
-let words=[
-"HAPPY BIRTHDAY NANDANI ❤️",
-"I LOVE YOU NANDANI 💖",
-"YOU ARE SO SPECIAL 🌹",
-"KEEP SMILING ALWAYS ✨",
-"YOU DESERVE THE BEST 💕"
-];
-
-for(let i=0;i<25;i++){
- let s=document.createElement("span");
- s.innerText=words[i%words.length];
- s.style.left=Math.random()*90+"%";
- s.style.animationDuration=(9+Math.random()*15)+"s";
- s.style.animationDelay=(-Math.random()*15)+"s";
- bg.appendChild(s);
-}
-
-// Live clock
-function clock(){
- document.getElementById("clock").innerText=
- new Date().toLocaleTimeString("en-IN");
-}
-setInterval(clock,1000);
-clock();
-
-// Password check
+/* PASSWORD CHECK */
 function checkPassword(){
 
- let entered=document
- .getElementById("password")
- .value.trim().toLowerCase();
+  let entered = document
+    .getElementById("password")
+    .value.trim().toLowerCase();
 
- if(entered==="nandani"){
+  if(entered === "nandani"){
 
-  document.getElementById("login").style.display="none";
-  document.getElementById("birthday").style.display="block";
+    document.getElementById("login").style.display = "none";
+    document.getElementById("birthday").style.display = "block";
+    document.getElementById("topScroll").style.display = "block";
+    document.getElementById("backgroundText").style.display = "block";
 
-  createHearts();
+    if(!surpriseStarted){
+      surpriseStarted = true;
+      createBackgroundText();
+      startFloatingAnimation();
+      updateClock();
+      setInterval(updateClock,1000);
+    }
 
- }else{
-
-  document.getElementById("error").innerText=
-  "❌ Incorrect Password! Try Again.";
-
- }
+  }else{
+    document.getElementById("error").innerText =
+      "Wrong Password! Please Try Again ❤️";
+  }
 }
 
-// Enter key
-document.getElementById("password")
-.addEventListener("keydown",function(e){
- if(e.key==="Enter"){
-  checkPassword();
- }
+/* ENTER KEY */
+document.getElementById("password").addEventListener("keydown",function(event){
+  if(event.key === "Enter"){
+    checkPassword();
+  }
 });
 
-// Floating hearts
-function createHearts(){
+/* BACKGROUND SCROLLING TEXT */
+function createBackgroundText(){
 
- for(let i=0;i<70;i++){
+  const container = document.getElementById("backgroundText");
 
-  let h=document.createElement("div");
-  h.className="floating";
-
-  let icons=["❤️","💖","🌹","🌸","✨","💐"];
-
-  h.innerText=icons[
-   Math.floor(Math.random()*icons.length)
+  const messages = [
+    "HAPPY BIRTHDAY NANDANI ❤️",
+    "I LOVE YOU NANDANI 💖",
+    "YOU ARE SO SPECIAL 🌹",
+    "KEEP SMILING ALWAYS 🌸",
+    "YOU DESERVE THE BEST 🎁"
   ];
 
-  h.style.left=Math.random()*100+"vw";
-  h.style.animationDuration=(3+Math.random()*5)+"s";
+  messages.forEach(function(message,index){
 
-  document.body.appendChild(h);
+    let line = document.createElement("div");
+    line.className = "bg-line";
+    line.innerText = message;
+    line.style.top = (10 + index * 18) + "%";
+    line.style.animationDelay = (index * 2) + "s";
+    line.style.animationDuration = (18 + index * 3) + "s";
 
-  setTimeout(()=>h.remove(),8000);
- }
+    container.appendChild(line);
+  });
 }
 
+/* FLOATING HEARTS AND FLOWERS */
+function startFloatingAnimation(){
+
+  const items = ["❤️","💖","💕","🌹","🌸","🌷","💐","✨"];
+
+  setInterval(function(){
+
+    let item = document.createElement("div");
+    item.className = "float-item";
+    item.innerText = items[Math.floor(Math.random()*items.length)];
+
+    item.style.left = Math.random()*100 + "vw";
+    item.style.fontSize = (20 + Math.random()*20) + "px";
+
+    document.body.appendChild(item);
+
+    setTimeout(function(){
+      item.remove();
+    },7000);
+
+  },500);
+}
+
+/* LIVE DATE AND TIME */
+function updateClock(){
+
+  let now = new Date();
+
+  let date = now.toLocaleDateString("en-IN",{
+    day:"2-digit",
+    month:"long",
+    year:"numeric"
+  });
+
+  let time = now.toLocaleTimeString("en-IN");
+
+  document.getElementById("clock").innerHTML =
+    "📅 " + date + "<br>⏰ " + time;
+}
 </script>
 
 </body>
