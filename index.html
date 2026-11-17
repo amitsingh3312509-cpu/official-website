@@ -3,26 +3,46 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Birthday Surprise ❤️ Nandani</title>
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Birthday Love - Nandani ❤️</title>
 
 <style>
-*{
- margin:0;
- padding:0;
- box-sizing:border-box;
-}
+*{margin:0;padding:0;box-sizing:border-box}
 
 body{
- font-family:Georgia,serif;
- min-height:100vh;
+ font-family:Arial,sans-serif;
  text-align:center;
  color:white;
- background:linear-gradient(135deg,#ff416c,#ff4b8b,#7b2ff7);
+ min-height:100vh;
+ background:linear-gradient(135deg,#ff1744,#ff69a6,#8e44ad);
  overflow-x:hidden;
 }
 
-.background-love{
+/* TOP SCROLLING */
+.top-scroll{
+ position:sticky;
+ top:0;
+ z-index:10;
+ background:#c90050;
+ padding:13px 0;
+ overflow:hidden;
+ border-bottom:2px solid white;
+}
+
+.top-scroll div{
+ white-space:nowrap;
+ font-size:19px;
+ font-weight:bold;
+ animation:slide 13s linear infinite;
+}
+
+@keyframes slide{
+ from{transform:translateX(100%)}
+ to{transform:translateX(-100%)}
+}
+
+/* BACKGROUND SCROLLING */
+.bg{
  position:fixed;
  inset:0;
  z-index:0;
@@ -30,313 +50,275 @@ body{
  pointer-events:none;
 }
 
-.background-love span{
+.bg span{
  position:absolute;
- color:#ffffff;
- opacity:.13;
- font-size:22px;
- font-weight:bold;
  white-space:nowrap;
- animation:move 12s linear infinite;
+ font-size:23px;
+ font-weight:bold;
+ opacity:.18;
+ animation:up 13s linear infinite;
 }
 
-@keyframes move{
- from{transform:translateY(110vh) rotate(-10deg);}
- to{transform:translateY(-120vh) rotate(10deg);}
+@keyframes up{
+ from{transform:translateY(110vh)}
+ to{transform:translateY(-120vh)}
 }
 
 .container{
  position:relative;
  z-index:2;
- width:92%;
- max-width:480px;
- margin:35px auto;
- padding:25px 18px;
- background:#ffffff25;
- border:1px solid #ffffff80;
+ width:93%;
+ max-width:470px;
+ margin:25px auto;
+ padding:25px 15px;
  border-radius:25px;
- box-shadow:0 10px 40px #5c003c70;
- backdrop-filter:blur(8px);
+ background:#ffffff30;
+ border:2px solid #ffffff80;
+ box-shadow:0 10px 35px #68003580;
 }
 
-.top{
- font-size:50px;
- margin:10px;
-}
-
-h1{
- font-size:30px;
- margin:15px 0;
-}
+h1{font-size:29px;margin:15px 0}
 
 .name{
- font-size:27px;
  color:#fff700;
+ font-size:27px;
  font-weight:bold;
- text-shadow:0 0 12px #ff0066;
+ text-shadow:0 0 12px red;
 }
 
 .date{
- margin:20px 0;
- padding:12px;
+ background:#ffffff30;
+ padding:15px;
  border-radius:15px;
- background:#ffffff25;
- font-size:16px;
+ margin:20px 0;
  line-height:2;
 }
 
 button{
- background:linear-gradient(45deg,#ff0055,#ff4b8b);
- border:2px solid white;
+ background:#ff0055;
  color:white;
+ border:2px solid white;
+ border-radius:30px;
+ padding:15px 25px;
  font-size:18px;
  font-weight:bold;
- padding:15px 25px;
- border-radius:35px;
+ margin:20px;
+}
+
+.card{
+ background:#ffffff30;
+ border:1px solid white;
+ border-radius:20px;
  margin:20px 0;
- cursor:pointer;
- box-shadow:0 5px 20px #70002e;
+ padding:20px 10px;
 }
 
-#surprise{
- display:none;
- animation:show 1.5s ease;
-}
-
-@keyframes show{
- from{opacity:0;transform:translateY(40px);}
- to{opacity:1;transform:translateY(0);}
-}
-
-.flowers{
- font-size:36px;
- margin:20px 0;
- line-height:1.7;
+.emoji{
+ font-size:65px;
+ margin:15px;
 }
 
 .love{
- font-size:34px;
  color:#fff700;
+ font-size:30px;
  font-weight:bold;
- margin:20px 0;
- text-shadow:0 0 15px red;
+ margin:25px 0;
+ text-shadow:0 0 12px red;
 }
 
 .message{
- font-size:18px;
+ font-size:17px;
  line-height:1.9;
  margin:20px 5px;
 }
 
-.shayari{
- background:#ffffff25;
- border:1px solid #ffffff70;
- border-radius:18px;
- padding:18px 10px;
- margin:22px 0;
- font-size:17px;
- line-height:2;
-}
-
-.chocolate{
- font-size:50px;
- margin:15px;
-}
+#surprise{display:none}
 
 .footer{
- border-top:1px solid #ffffff70;
- padding-top:18px;
  margin-top:30px;
- font-size:15px;
- font-weight:bold;
+ padding:20px;
+ border-top:1px solid white;
 }
 
-.heart{
+.floating{
  position:fixed;
- z-index:1;
  bottom:-50px;
- font-size:27px;
+ font-size:28px;
+ z-index:5;
  animation:float 6s linear forwards;
  pointer-events:none;
 }
 
 @keyframes float{
- to{
- transform:translateY(-110vh) rotate(360deg);
- opacity:0;
- }
+ to{transform:translateY(-110vh) rotate(360deg);opacity:0}
 }
 </style>
 </head>
 
 <body>
 
-<div class="background-love" id="bg"></div>
+<div class="top-scroll">
+<div>
+❤️ HAPPY BIRTHDAY NANDANI ❤️ &nbsp;&nbsp;
+💖 I LOVE YOU NANDANI 💖 &nbsp;&nbsp;
+🌹 YOU ARE MY SPECIAL PERSON 🌹
+</div>
+</div>
+
+<div class="bg" id="background"></div>
 
 <div class="container">
 
-<div class="top">🎂🎀💝</div>
+<div class="emoji">🎂🎈🎀</div>
 
-<h1>Happy Birthday</h1>
+<h1>✨ Happy Birthday ✨</h1>
 
-<div class="name">
-Nandani Singh Rajput ❤️
-</div>
+<div class="name">Nandani Singh Rajput ❤️</div>
 
 <div class="date">
-📅 Date: 18 November 2026
+📅 18 November 2026
 <br>
-⏰ Time: <span id="clock">Loading...</span>
+⏰ <span id="clock"></span>
 <br>
-🌹 A Special Day For Someone Special
+💕 A Beautiful Day For A Beautiful Soul
 </div>
 
+<h2>🌹 You Are Special 🌹</h2>
+
 <p class="message">
-Aaj ka din mere liye bhi khaas hai,
-kyunki aaj ek bahut khaas insaan ka birthday hai. ❤️
+Today is not just another day.
+It is the birthday of someone truly special.
+May your life always shine with happiness,
+love and beautiful memories. ❤️
 </p>
 
-<button onclick="openGift()">
-🎁 Open My Surprise ❤️
-</button>
+<button onclick="openGift()">🎁 Open Your Surprise</button>
 
 <div id="surprise">
 
-<div class="flowers">
-🌹🌷🌸🌺🌹
+<div class="love">
+HAPPY BIRTHDAY NANDANI ❤️
 </div>
 
-<h1>Happy Birthday Nandani! 🎂</h1>
+<div class="card">
+<h2>🌹 Flowers For You</h2>
+<div class="emoji">💐🌹🌷🌸</div>
+<p>May your life bloom like beautiful flowers!</p>
+</div>
+
+<div class="card">
+<h2>🍫 Sweet Chocolate</h2>
+<div class="emoji">🍫🍬🍫</div>
+<p>A little sweetness for your special day!</p>
+</div>
+
+<div class="card">
+<h2>🎂 Birthday Cake</h2>
+<div class="emoji">🎂🕯️🎂</div>
+<p>Make a wish and keep smiling forever!</p>
+</div>
+
+<div class="card">
+<h2>🎁 Special Gift</h2>
+<div class="emoji">🎁💝🎀</div>
+<p>A special surprise, just for you!</p>
+</div>
 
 <div class="love">
-I LOVE YOU ❤️
-<br>
-NANDANI 💖✨✨
+I LOVE YOU NANDANI ❤️
 </div>
 
-<div class="chocolate">
-🍫🍫🍫
-</div>
-
-<h2>💌 A Small Message For You</h2>
+<h2>💌 A Special Message</h2>
 
 <p class="message">
-Nandani, tumhari muskurahat hamesha
-yunhi bani rahe.
+You are a beautiful part of my thoughts.
+Your smile makes every moment brighter.
+I wish you endless happiness,
+success and countless reasons to smile.
 
-Tumhare har din mein khushiyan hon,
-tumhare har sapne ko ek nayi udaan mile.
-
-Main bas yahi chahta hoon ki tumhari
-zindagi hamesha khushiyon se bhari rahe.
-
-Tum mere liye bahut special ho. ❤️
+Always stay happy and keep shining.
+You deserve all the beautiful things
+this world has to offer. ❤️
 </p>
 
-<div class="shayari">
-🌹 <b>Shayari No. 1</b> 🌹
-<br><br>
-Teri muskurahat se roshan meri har shaam ho,
-Teri khushiyon ke naam meri har dua ho,
-Janamdin par bas itni si khwahish hai meri,
-Tere chehre par hamesha khushiyon ka paigaam ho. ❤️
-</div>
-
-<div class="shayari">
-💖 <b>Shayari No. 2</b> 💖
-<br><br>
-Phoolon ki tarah teri zindagi mehakti rahe,
-Har subah teri khushiyon se sajti rahe,
-Rab se bas yahi dua hai meri,
-Teri duniya hamesha hansi se bhari rahe. 🌹
-</div>
-
-<div class="flowers">
-💐🌹🌷🌸💐
-</div>
-
-<h2>🎂 Many Many Happy Returns Of The Day!</h2>
-
+<div class="card">
+<h2>🌹 Birthday Wish</h2>
 <p class="message">
-Stay Happy Nandani ❤️
-<br>
-Keep Smiling Always 😊
+May your dreams come true,
+May your heart always be happy,
+May every moment bring a smile,
+And may your life be full of love! 💖
 </p>
+</div>
 
 <div class="love">
+ONCE AGAIN HAPPY BIRTHDAY! 🎂
+<br>
 I LOVE YOU NANDANI ❤️
 </div>
 
 </div>
 
 <div class="footer">
-Made With ❤️
+Made With Endless Love ❤️
 <br><br>
-Created by Amit Kumar Singh
+<b>Created by Amit Kumar Singh</b>
 </div>
 
 </div>
 
 <script>
 
-// Live Date and Time
-function updateClock(){
- let now=new Date();
+// Live clock
+function clock(){
+ document.getElementById("clock").innerText=
+ new Date().toLocaleTimeString("en-IN");
+}
+setInterval(clock,1000);
+clock();
 
- let time=now.toLocaleTimeString("en-IN",{
-  hour:"2-digit",
-  minute:"2-digit",
-  second:"2-digit",
-  hour12:true
- });
+// Background scrolling
+let bg=document.getElementById("background");
 
- document.getElementById("clock").innerText=time;
+let words=[
+"HAPPY BIRTHDAY NANDANI ❤️",
+"I LOVE YOU NANDANI 💖",
+"YOU ARE SO SPECIAL 🌹",
+"KEEP SMILING ALWAYS ✨",
+"YOU DESERVE THE BEST 💕"
+];
+
+for(let i=0;i<25;i++){
+ let s=document.createElement("span");
+ s.innerText=words[i%words.length];
+ s.style.left=Math.random()*90+"%";
+ s.style.animationDuration=(9+Math.random()*15)+"s";
+ s.style.animationDelay=(-Math.random()*15)+"s";
+ bg.appendChild(s);
 }
 
-setInterval(updateClock,1000);
-updateClock();
-
-// Background Love Text
-let bg=document.getElementById("bg");
-
-for(let i=0;i<18;i++){
- let span=document.createElement("span");
- span.innerText="I LOVE YOU NANDANI ❤️";
- span.style.left=Math.random()*90+"%";
- span.style.animationDuration=(8+Math.random()*12)+"s";
- span.style.animationDelay=(-Math.random()*15)+"s";
- bg.appendChild(span);
-}
-
-// Open Surprise
+// Surprise
 function openGift(){
-
  document.getElementById("surprise").style.display="block";
-
  document.querySelector("button").style.display="none";
 
- window.scrollTo({
-  top:document.body.scrollHeight,
-  behavior:"smooth"
- });
-
- for(let i=0;i<60;i++){
+ for(let i=0;i<70;i++){
   let h=document.createElement("div");
-  h.className="heart";
+  h.className="floating";
 
-  let emojis=["❤️","💖","🌹","🌸","💕","✨","💐"];
-
-  h.innerText=emojis[
-   Math.floor(Math.random()*emojis.length)
-  ];
+  let icons=["❤️","💖","🌹","🌸","✨","💐"];
+  h.innerText=icons[Math.floor(Math.random()*icons.length)];
 
   h.style.left=Math.random()*100+"vw";
   h.style.animationDuration=(3+Math.random()*5)+"s";
 
   document.body.appendChild(h);
-
   setTimeout(()=>h.remove(),8000);
  }
+
+ document.getElementById("surprise").scrollIntoView({
+  behavior:"smooth"
+ });
 }
 </script>
 
