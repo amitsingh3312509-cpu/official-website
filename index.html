@@ -3,8 +3,8 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Birthday Love - Nandani ❤️</title>
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>Happy Birthday Nandani ❤️</title>
 
 <style>
 *{margin:0;padding:0;box-sizing:border-box}
@@ -14,7 +14,7 @@ body{
  text-align:center;
  color:white;
  min-height:100vh;
- background:linear-gradient(135deg,#ff1744,#ff69a6,#8e44ad);
+ background:linear-gradient(135deg,#ff416c,#ff85a1,#8e44ad);
  overflow-x:hidden;
 }
 
@@ -24,14 +24,14 @@ body{
  top:0;
  z-index:10;
  background:#c90050;
- padding:13px 0;
+ padding:14px 0;
  overflow:hidden;
  border-bottom:2px solid white;
 }
 
 .top-scroll div{
  white-space:nowrap;
- font-size:19px;
+ font-size:18px;
  font-weight:bold;
  animation:slide 13s linear infinite;
 }
@@ -41,7 +41,7 @@ body{
  to{transform:translateX(-100%)}
 }
 
-/* BACKGROUND SCROLLING */
+/* BACKGROUND TEXT */
 .bg{
  position:fixed;
  inset:0;
@@ -55,8 +55,8 @@ body{
  white-space:nowrap;
  font-size:23px;
  font-weight:bold;
- opacity:.18;
- animation:up 13s linear infinite;
+ opacity:.17;
+ animation:up 14s linear infinite;
 }
 
 @keyframes up{
@@ -77,7 +77,7 @@ body{
  box-shadow:0 10px 35px #68003580;
 }
 
-h1{font-size:29px;margin:15px 0}
+h1{font-size:28px;margin:15px 0}
 
 .name{
  color:#fff700;
@@ -86,12 +86,14 @@ h1{font-size:29px;margin:15px 0}
  text-shadow:0 0 12px red;
 }
 
-.date{
- background:#ffffff30;
+input{
+ width:90%;
  padding:15px;
- border-radius:15px;
- margin:20px 0;
- line-height:2;
+ border:none;
+ border-radius:12px;
+ margin:15px 0;
+ font-size:17px;
+ text-align:center;
 }
 
 button{
@@ -99,10 +101,19 @@ button{
  color:white;
  border:2px solid white;
  border-radius:30px;
- padding:15px 25px;
- font-size:18px;
+ padding:14px 25px;
+ font-size:17px;
  font-weight:bold;
- margin:20px;
+ margin:15px;
+ cursor:pointer;
+}
+
+.date{
+ background:#ffffff30;
+ padding:15px;
+ border-radius:15px;
+ margin:20px 0;
+ line-height:2;
 }
 
 .card{
@@ -116,6 +127,11 @@ button{
 .emoji{
  font-size:65px;
  margin:15px;
+ animation:bounce 2s infinite;
+}
+
+@keyframes bounce{
+ 50%{transform:translateY(-10px)}
 }
 
 .love{
@@ -132,12 +148,26 @@ button{
  margin:20px 5px;
 }
 
-#surprise{display:none}
+.shayari{
+ background:#ffffff30;
+ border-radius:18px;
+ padding:18px;
+ margin:20px 0;
+ line-height:2;
+}
 
 .footer{
  margin-top:30px;
  padding:20px;
  border-top:1px solid white;
+}
+
+#birthday{display:none}
+
+#error{
+ color:#fff700;
+ font-weight:bold;
+ margin:10px;
 }
 
 .floating{
@@ -150,7 +180,10 @@ button{
 }
 
 @keyframes float{
- to{transform:translateY(-110vh) rotate(360deg);opacity:0}
+ to{
+ transform:translateY(-110vh) rotate(360deg);
+ opacity:0;
+ }
 }
 </style>
 </head>
@@ -159,9 +192,9 @@ button{
 
 <div class="top-scroll">
 <div>
-❤️ HAPPY BIRTHDAY NANDANI ❤️ &nbsp;&nbsp;
-💖 I LOVE YOU NANDANI 💖 &nbsp;&nbsp;
-🌹 YOU ARE MY SPECIAL PERSON 🌹
+❤️ HAPPY BIRTHDAY NANDANI ❤️
+&nbsp;&nbsp; 💖 I LOVE YOU NANDANI 💖
+&nbsp;&nbsp; 🌹 YOU ARE SPECIAL 🌹
 </div>
 </div>
 
@@ -169,11 +202,48 @@ button{
 
 <div class="container">
 
+<!-- PASSWORD SCREEN -->
+
+<div id="login">
+
+<div class="emoji">🔐💝🎀</div>
+
+<h1>Welcome Special Person</h1>
+
+<div class="name">Nandani ❤️</div>
+
+<p class="message">
+This Surprise Is Only For You!
+<br>
+Enter Your Name To Open Your Gift 💖
+</p>
+
+<input
+ type="password"
+ id="password"
+ placeholder="Enter Password"
+ autocomplete="off"
+>
+
+<br>
+
+<button onclick="checkPassword()">
+🔓 Open My Surprise
+</button>
+
+<p id="error"></p>
+
+</div>
+
+<!-- BIRTHDAY SCREEN -->
+
+<div id="birthday">
+
 <div class="emoji">🎂🎈🎀</div>
 
 <h1>✨ Happy Birthday ✨</h1>
 
-<div class="name">Nandani Singh Rajput ❤️</div>
+<div class="name">Nandani ❤️</div>
 
 <div class="date">
 📅 18 November 2026
@@ -183,18 +253,12 @@ button{
 💕 A Beautiful Day For A Beautiful Soul
 </div>
 
-<h2>🌹 You Are Special 🌹</h2>
-
 <p class="message">
 Today is not just another day.
 It is the birthday of someone truly special.
 May your life always shine with happiness,
 love and beautiful memories. ❤️
 </p>
-
-<button onclick="openGift()">🎁 Open Your Surprise</button>
-
-<div id="surprise">
 
 <div class="love">
 HAPPY BIRTHDAY NANDANI ❤️
@@ -241,19 +305,29 @@ You deserve all the beautiful things
 this world has to offer. ❤️
 </p>
 
-<div class="card">
-<h2>🌹 Birthday Wish</h2>
-<p class="message">
-May your dreams come true,
-May your heart always be happy,
-May every moment bring a smile,
-And may your life be full of love! 💖
-</p>
+<div class="shayari">
+🌹 Shayari 1 🌹
+<br><br>
+Teri muskurahat meri pehchaan ban jaaye,
+Teri khushi meri jaan ban jaaye,
+Har dua mein maanga hai tujhe,
+Tera har janamdin yaadgaar ban jaaye. ❤️
 </div>
 
+<div class="shayari">
+💖 Shayari 2 💖
+<br><br>
+Teri zindagi phoolon se sajti rahe,
+Har khushi tere kadmon mein rehti rahe,
+Janamdin par bas yahi dua hai,
+Teri muskaan hamesha yunhi chamakti rahe. 🌹
+</div>
+
+<div class="emoji">💐🍫🎂❤️</div>
+
+<h2>Once Again Happy Birthday!</h2>
+
 <div class="love">
-ONCE AGAIN HAPPY BIRTHDAY! 🎂
-<br>
 I LOVE YOU NANDANI ❤️
 </div>
 
@@ -268,14 +342,6 @@ Made With Endless Love ❤️
 </div>
 
 <script>
-
-// Live clock
-function clock(){
- document.getElementById("clock").innerText=
- new Date().toLocaleTimeString("en-IN");
-}
-setInterval(clock,1000);
-clock();
 
 // Background scrolling
 let bg=document.getElementById("background");
@@ -297,29 +363,67 @@ for(let i=0;i<25;i++){
  bg.appendChild(s);
 }
 
-// Surprise
-function openGift(){
- document.getElementById("surprise").style.display="block";
- document.querySelector("button").style.display="none";
+// Live clock
+function clock(){
+ document.getElementById("clock").innerText=
+ new Date().toLocaleTimeString("en-IN");
+}
+setInterval(clock,1000);
+clock();
+
+// Password check
+function checkPassword(){
+
+ let entered=document
+ .getElementById("password")
+ .value.trim().toLowerCase();
+
+ if(entered==="nandani"){
+
+  document.getElementById("login").style.display="none";
+  document.getElementById("birthday").style.display="block";
+
+  createHearts();
+
+ }else{
+
+  document.getElementById("error").innerText=
+  "❌ Incorrect Password! Try Again.";
+
+ }
+}
+
+// Enter key
+document.getElementById("password")
+.addEventListener("keydown",function(e){
+ if(e.key==="Enter"){
+  checkPassword();
+ }
+});
+
+// Floating hearts
+function createHearts(){
 
  for(let i=0;i<70;i++){
+
   let h=document.createElement("div");
   h.className="floating";
 
   let icons=["❤️","💖","🌹","🌸","✨","💐"];
-  h.innerText=icons[Math.floor(Math.random()*icons.length)];
+
+  h.innerText=icons[
+   Math.floor(Math.random()*icons.length)
+  ];
 
   h.style.left=Math.random()*100+"vw";
   h.style.animationDuration=(3+Math.random()*5)+"s";
 
   document.body.appendChild(h);
+
   setTimeout(()=>h.remove(),8000);
  }
-
- document.getElementById("surprise").scrollIntoView({
-  behavior:"smooth"
- });
 }
+
 </script>
 
 </body>
