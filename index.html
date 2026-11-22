@@ -1,445 +1,716 @@
 
 <!DOCTYPE html>
-<html lang="en">
+<html lang="hi">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Happy Birthday Nandani I love you</title>
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Smart Attendance & File Manager</title>
 
 <style>
-*{
-  margin:0;
-  padding:0;
-  box-sizing:border-box;
-}
-
+*{box-sizing:border-box}
 body{
-  font-family:Arial,sans-serif;
-  min-height:100vh;
-  overflow-x:hidden;
-  background:linear-gradient(135deg,#ff758c,#ffb199,#ffd6e0);
-  color:#fff;
-  text-align:center;
+ margin:0;font-family:Arial,sans-serif;
+ background:#eff4ff;color:#172554
 }
-
-/* LOGIN */
-#login{
-  min-height:100vh;
-  display:flex;
-  justify-content:center;
-  align-items:center;
-  padding:20px;
+header{
+ background:linear-gradient(120deg,#312e81,#2563eb);
+ color:white;text-align:center;padding:20px 10px
 }
-
-.login-box{
-  width:100%;
-  max-width:350px;
-  padding:30px 22px;
-  border-radius:22px;
-  background:rgba(255,255,255,.22);
-  box-shadow:0 8px 30px rgba(0,0,0,.2);
-  backdrop-filter:blur(10px);
-}
-
-.login-box h1{
-  font-size:28px;
-  margin-bottom:15px;
-  color:#fff;
-}
-
-.login-box p{
-  margin-bottom:18px;
-}
-
-input{
-  width:100%;
-  padding:13px;
-  border:0;
-  outline:none;
-  border-radius:10px;
-  font-size:16px;
-  text-align:center;
-  margin-bottom:15px;
-}
-
-button{
-  padding:12px 25px;
-  border:0;
-  border-radius:25px;
-  background:#ff2675;
-  color:white;
-  font-size:16px;
-  font-weight:bold;
-  cursor:pointer;
-}
-
-#error{
-  color:#fff;
-  margin-top:12px;
-  font-weight:bold;
-}
-
-/* BIRTHDAY PAGE */
-#birthday{
-  display:none;
-  min-height:100vh;
-  padding-bottom:30px;
-  position:relative;
-  z-index:2;
-}
-
-.top-scroll{
-  display:none;
-  overflow:hidden;
-  white-space:nowrap;
-  background:#ff176b;
-  padding:13px 0;
-  font-size:18px;
-  font-weight:bold;
-  position:relative;
-  z-index:5;
-}
-
-.top-scroll span{
-  display:inline-block;
-  padding-left:100%;
-  animation:scroll 18s linear infinite;
-}
-
-@keyframes scroll{
-  from{transform:translateX(0);}
-  to{transform:translateX(-100%);}
-}
-
-.content{
-  position:relative;
-  z-index:3;
-  padding:20px 15px;
-}
-
-h1{
-  font-size:32px;
-  margin:15px 0;
-  text-shadow:2px 3px 5px #a90045;
-}
-
-.name{
-  font-size:42px;
-  color:#fff000;
-  font-weight:bold;
-  text-shadow:2px 3px 5px #a90045;
-  margin:15px 0;
-}
-
-.date{
-  font-size:18px;
-  margin:12px;
-  font-weight:bold;
-}
-
-.decorations{
-  font-size:38px;
-  line-height:1.8;
-  margin:15px 0;
-}
-
+header h2{margin:0 0 8px}
+.container{max-width:950px;margin:auto;padding:12px}
 .card{
-  max-width:650px;
-  margin:18px auto;
-  padding:22px;
-  border-radius:20px;
-  background:rgba(255,255,255,.23);
-  box-shadow:0 5px 20px rgba(120,0,50,.15);
-  backdrop-filter:blur(5px);
+ background:white;padding:16px;margin-bottom:15px;
+ border-radius:14px;box-shadow:0 3px 12px #0001
 }
-
-.card h2{
-  color:#fff000;
-  margin-bottom:12px;
+h3{color:#1d4ed8;margin-top:5px}
+input,select,button{
+ width:100%;padding:12px;margin:6px 0;
+ border:1px solid #cbd5e1;border-radius:8px;
+ font-size:15px
 }
-
-.card p{
-  font-size:17px;
-  line-height:1.8;
+button{
+ background:#2563eb;color:white;border:0;
+ cursor:pointer;font-weight:bold
 }
-
-.shayari{
-  font-size:18px;
-  line-height:1.9;
-  color:white;
+button:active{opacity:.8}
+.green{background:#15803d}
+.red{background:#dc2626}
+.orange{background:#ea580c}
+.gray{background:#475569}
+.tabs{display:flex;gap:7px;flex-wrap:wrap}
+.tabs button{flex:1;min-width:100px}
+.hidden{display:none}
+.item{
+ background:#f8fafc;border:1px solid #dbeafe;
+ padding:12px;border-radius:10px;margin:10px 0;
+ overflow-wrap:anywhere
 }
-
-.clock{
-  font-size:19px;
-  font-weight:bold;
-  margin:15px;
+.item button{width:auto;padding:9px;margin:3px}
+.small{font-size:12px;color:#64748b}
+.stats{display:flex;gap:8px;flex-wrap:wrap}
+.stat{
+ flex:1;min-width:100px;background:#eff6ff;
+ padding:12px;border-radius:10px;text-align:center
 }
-
-/* BACKGROUND SCROLLING TEXT */
-#backgroundText{
-  display:none;
-  position:fixed;
-  inset:0;
-  overflow:hidden;
-  pointer-events:none;
-  z-index:1;
-}
-
-.bg-line{
-  position:absolute;
-  white-space:nowrap;
-  font-size:20px;
-  font-weight:bold;
-  color:rgba(255,255,255,.25);
-  animation:bgScroll 20s linear infinite;
-}
-
-@keyframes bgScroll{
-  from{transform:translateX(100vw);}
-  to{transform:translateX(-120%);}
-}
-
-/* FLOATING HEARTS */
-.float-item{
-  position:fixed;
-  bottom:-40px;
-  z-index:4;
-  pointer-events:none;
-  animation:floatUp 7s linear forwards;
-}
-
-@keyframes floatUp{
-  0%{
-    transform:translateY(0) rotate(0deg);
-    opacity:1;
-  }
-  100%{
-    transform:translateY(-110vh) rotate(360deg);
-    opacity:0;
-  }
-}
-
-footer{
-  padding:20px 10px;
-  font-size:14px;
-  position:relative;
-  z-index:3;
-}
+.stat h2{margin:5px}
+footer{text-align:center;padding:20px;color:#64748b}
+img,video{max-width:100%;max-height:400px}
 </style>
 </head>
 
 <body>
 
-<!-- PASSWORD SCREEN -->
-<div id="login">
-  <div class="login-box">
-    <h1>🎁 Birthday Surprise 🎁</h1>
-    <p>Enter Password to Open Surprise ❤️</p>
+<header>
+<h2>📁 Smart Attendance & File Manager</h2>
+<p>Student Attendance & Document System</p>
+<button class="gray" style="max-width:150px"
+onclick="changeLanguage()">🌐 हिंदी / English</button>
+</header>
 
-    <input
-      type="password"
-      id="password"
-      placeholder="Enter Password"
-      autocomplete="off"
-    >
+<div class="container">
 
-    <button onclick="checkPassword()">Open Surprise 💖</button>
-    <div id="error"></div>
-  </div>
+<!-- DASHBOARD -->
+
+<div class="card">
+<h3>🏠 Dashboard</h3>
+<p>Welcome to Smart Management System</p>
+
+<div class="stats">
+<div class="stat">
+Total Attendance
+<h2 id="totalAtt">0</h2>
+</div>
+<div class="stat">
+Present
+<h2 id="presentAtt">0</h2>
+</div>
+<div class="stat">
+Total Files
+<h2 id="totalFiles">0</h2>
+</div>
+</div>
 </div>
 
-<!-- BACKGROUND TEXT - HIDDEN BEFORE LOGIN -->
-<div id="backgroundText"></div>
+<!-- MENU -->
 
-<!-- BIRTHDAY PAGE -->
-<div id="birthday">
+<div class="card">
+<div class="tabs">
+<button onclick="openTab('home')">🏠 Home</button>
+<button onclick="openTab('attendance')">📅 Attendance</button>
+<button onclick="openTab('documents')">📁 Documents</button>
+</div>
+</div>
 
-  <div class="top-scroll" id="topScroll">
-    <span>
-      🎂 HAPPY BIRTHDAY NANDANI 💖
-      I LOVE YOU NANDANI ❤️
-      YOU ARE SO SPECIAL 🌹
-      KEEP SMILING ALWAYS 🌸
-      YOU DESERVE THE BEST 🎁
-    </span>
-  </div>
+<!-- HOME -->
 
-  <div class="content">
+<div id="home" class="card">
+<h3>📌 Welcome</h3>
+<p>यहाँ से आप Attendance और सभी Documents मैनेज कर सकते हैं।</p>
+<p>Manage your attendance and files easily.</p>
+</div>
 
-    <div class="decorations">
-      🌹 💐 🌷 🌸 🌺
-    </div>
+<!-- ATTENDANCE -->
 
-    <h1>🎉 HAPPY BIRTHDAY 🎉</h1>
+<div id="attendance" class="card hidden">
 
-    <div class="name">NANDANI I Love You 💖💝💖</div>
+<h3>📅 Attendance Management</h3>
 
-    <div class="date">
-      🎂 18 November 2026 🎂
-    </div>
+<label>Student Name / विद्यार्थी का नाम</label>
+<input id="studentName" placeholder="Enter Student Name">
 
-    <div class="decorations">
-      🎁 🍫 🍬 🎂 🍭 💝
-    </div>
+<label>Roll Number / रोल नंबर</label>
+<input id="rollNo" placeholder="Enter Roll Number">
 
-    <div class="card">
-      <h2>💖 Birthday Wishes 💖</h2>
-      <p>
-        Happy Birthday Nandani! 🎂<br>
-        May your life always be filled with happiness,
-        love, success and beautiful moments.<br>
-        Keep smiling and always follow your dreams.
-        You deserve all the wonderful things in life. 🌸
-      </p>
-    </div>
+<label>Date / तारीख</label>
+<input type="date" id="attDate">
 
-    <div class="card">
-      <h2>🌹 Special Shayari 1 🌹</h2>
-      <div class="shayari">
-        फूलों की तरह महकती रहो,<br>
-        सितारों की तरह चमकती रहो।<br>
-        हर दिन खुशियों से भरा रहे,<br>
-        जन्मदिन पर बस मुस्कुराती रहो। ❤️
-      </div>
-    </div>
+<label>Attendance Status</label>
+<select id="attStatus">
+<option value="Present">Present / उपस्थित</option>
+<option value="Absent">Absent / अनुपस्थित</option>
+<option value="Leave">Leave / छुट्टी</option>
+</select>
 
-    <div class="card">
-      <h2>💐 Special Shayari 2 💐</h2>
-      <div class="shayari">
-        आपकी हर सुबह खास हो,<br>
-        हर सपना आपके पास हो।<br>
-        खुशियों से भरा रहे जीवन आपका,<br>
-        जन्मदिन का हर पल यादगार हो। 🌷
-      </div>
-    </div>
+<button class="green" onclick="saveAttendance()">
+Save Attendance / सेव करें
+</button>
 
-    <div class="card">
-      <h2>🎁 A Special Message 🎁</h2>
-      <p>
-        Nandani, today is your special day.
-        May every new day bring new hopes,
-        new opportunities and countless reasons
-        to smile. Stay happy and keep shining! ✨
-      </p>
-    </div>
+<button class="orange" onclick="printAttendance()">
+🖨 Print Attendance
+</button>
 
-    <div class="clock" id="clock"></div>
+<h3>Attendance Records</h3>
+<input id="attSearch" placeholder="Search Student / Roll No" oninput="loadAttendance()">
 
-    <div class="decorations">
-      🌹 💖 🎂 💝 🍫 🌸
-    </div>
-
-  </div>
-
-  <footer>
-    Created by Amit Kumar Singh ❤️
-  </footer>
+<div id="attendanceList"></div>
 
 </div>
+
+<!-- DOCUMENTS -->
+
+<div id="documents" class="card hidden">
+
+<h3>📁 Upload Documents</h3>
+
+<label>Select Any Files / कोई भी फाइल चुनें</label>
+<input type="file" id="fileInput" multiple>
+
+<button class="green" onclick="uploadFiles()">
+⬆ Upload Files
+</button>
+
+<p class="small">
+Photo, PDF, Video, Audio, Word, Excel और अन्य फाइलें अपलोड करें।
+</p>
+
+<h3>📊 Storage Information</h3>
+
+<div class="stats">
+<div class="stat">
+Total Files
+<h2 id="fileCount">0</h2>
+</div>
+<div class="stat">
+Storage Used
+<h2 id="storageUsed">0 MB</h2>
+</div>
+</div>
+
+<h3>📂 My Documents</h3>
+
+<input id="fileSearch" placeholder="Search Files..." oninput="loadFiles()">
+
+<div id="fileList"></div>
+
+</div>
+
+</div>
+
+<footer>
+Created by Amit Kumar Singh
+</footer>
 
 <script>
-let surpriseStarted = false;
 
-/* PASSWORD CHECK */
-function checkPassword(){
+/* DATABASE */
 
-  let entered = document
-    .getElementById("password")
-    .value.trim().toLowerCase();
+let db;
 
-  if(entered === "nandani"){
+function openDatabase(){
 
-    document.getElementById("login").style.display = "none";
-    document.getElementById("birthday").style.display = "block";
-    document.getElementById("topScroll").style.display = "block";
-    document.getElementById("backgroundText").style.display = "block";
+return new Promise((resolve,reject)=>{
 
-    if(!surpriseStarted){
-      surpriseStarted = true;
-      createBackgroundText();
-      startFloatingAnimation();
-      updateClock();
-      setInterval(updateClock,1000);
-    }
+let request=indexedDB.open("SmartFileManager",1);
 
-  }else{
-    document.getElementById("error").innerText =
-      "Wrong Password! Please Try Again ❤️";
-  }
+request.onupgradeneeded=function(e){
+
+let database=e.target.result;
+
+if(!database.objectStoreNames.contains("files")){
+database.createObjectStore("files",{
+keyPath:"id",
+autoIncrement:true
+});
 }
 
-/* ENTER KEY */
-document.getElementById("password").addEventListener("keydown",function(event){
-  if(event.key === "Enter"){
-    checkPassword();
-  }
+};
+
+request.onsuccess=function(e){
+db=e.target.result;
+resolve();
+};
+
+request.onerror=function(){
+reject(request.error);
+};
+
 });
 
-/* BACKGROUND SCROLLING TEXT */
-function createBackgroundText(){
-
-  const container = document.getElementById("backgroundText");
-
-  const messages = [
-    "HAPPY BIRTHDAY NANDANI ❤️",
-    "I LOVE YOU NANDANI 💖",
-    "YOU ARE SO SPECIAL 🌹",
-    "KEEP SMILING ALWAYS 🌸",
-    "YOU DESERVE THE BEST 🎁"
-  ];
-
-  messages.forEach(function(message,index){
-
-    let line = document.createElement("div");
-    line.className = "bg-line";
-    line.innerText = message;
-    line.style.top = (10 + index * 18) + "%";
-    line.style.animationDelay = (index * 2) + "s";
-    line.style.animationDuration = (18 + index * 3) + "s";
-
-    container.appendChild(line);
-  });
 }
 
-/* FLOATING HEARTS AND FLOWERS */
-function startFloatingAnimation(){
+/* COMMON */
 
-  const items = ["❤️","💖","💕","🌹","🌸","🌷","💐","✨"];
+function openTab(id){
 
-  setInterval(function(){
+["home","attendance","documents"].forEach(x=>{
+document.getElementById(x).classList.add("hidden");
+});
 
-    let item = document.createElement("div");
-    item.className = "float-item";
-    item.innerText = items[Math.floor(Math.random()*items.length)];
+document.getElementById(id).classList.remove("hidden");
 
-    item.style.left = Math.random()*100 + "vw";
-    item.style.fontSize = (20 + Math.random()*20) + "px";
+if(id==="attendance")loadAttendance();
+if(id==="documents")loadFiles();
 
-    document.body.appendChild(item);
-
-    setTimeout(function(){
-      item.remove();
-    },7000);
-
-  },500);
 }
 
-/* LIVE DATE AND TIME */
-function updateClock(){
+function changeLanguage(){
 
-  let now = new Date();
+let hi=document.documentElement.lang==="hi";
 
-  let date = now.toLocaleDateString("en-IN",{
-    day:"2-digit",
-    month:"long",
-    year:"numeric"
-  });
+document.documentElement.lang=hi?"en":"hi";
 
-  let time = now.toLocaleTimeString("en-IN");
+document.querySelector("header p").innerText=
+hi?"Student Attendance & Document System":
+"विद्यार्थी उपस्थिति और दस्तावेज प्रणाली";
 
-  document.getElementById("clock").innerHTML =
-    "📅 " + date + "<br>⏰ " + time;
 }
+
+/* ATTENDANCE */
+
+function getAttendance(){
+return JSON.parse(localStorage.getItem("attendanceData")||"[]");
+}
+
+function saveAttendance(){
+
+let name=document.getElementById("studentName").value.trim();
+let roll=document.getElementById("rollNo").value.trim();
+let date=document.getElementById("attDate").value;
+let status=document.getElementById("attStatus").value;
+
+if(!name||!roll||!date){
+alert("Please fill all fields!");
+return;
+}
+
+let records=getAttendance();
+
+let existing=records.find(x=>x.roll===roll&&x.date===date);
+
+if(existing){
+existing.name=name;
+existing.status=status;
+}else{
+records.push({name,roll,date,status});
+}
+
+localStorage.setItem("attendanceData",JSON.stringify(records));
+
+alert("Attendance Saved Successfully!");
+
+loadAttendance();
+updateStats();
+
+}
+
+function loadAttendance(){
+
+let records=getAttendance();
+let search=document.getElementById("attSearch").value.toLowerCase();
+
+let html="";
+
+records.filter(x=>
+x.name.toLowerCase().includes(search)||
+x.roll.toLowerCase().includes(search)
+).forEach((x,i)=>{
+
+html+=`
+<div class="item">
+<b>${escapeHTML(x.name)}</b>
+<p>Roll No: ${escapeHTML(x.roll)}</p>
+<p>Date: ${escapeHTML(x.date)}</p>
+<p>Status: ${escapeHTML(x.status)}</p>
+<button class="red" onclick="deleteAttendance(${i})">Delete</button>
+</div>`;
+
+});
+
+document.getElementById("attendanceList").innerHTML=
+html||"No Attendance Records Found.";
+
+}
+
+function deleteAttendance(i){
+
+if(!confirm("Delete Attendance?"))return;
+
+let records=getAttendance();
+records.splice(i,1);
+
+localStorage.setItem("attendanceData",JSON.stringify(records));
+
+loadAttendance();
+updateStats();
+
+}
+
+function printAttendance(){
+
+let records=getAttendance();
+
+let rows=records.map(x=>`
+<tr>
+<td>${escapeHTML(x.name)}</td>
+<td>${escapeHTML(x.roll)}</td>
+<td>${escapeHTML(x.date)}</td>
+<td>${escapeHTML(x.status)}</td>
+</tr>`).join("");
+
+let w=window.open("","_blank");
+
+if(!w)return alert("Allow pop-ups to print.");
+
+w.document.write(`
+<h2>Attendance Report</h2>
+<table border="1" cellpadding="10">
+<tr><th>Name</th><th>Roll</th><th>Date</th><th>Status</th></tr>
+${rows}
+</table>
+`);
+
+w.document.close();
+w.print();
+
+}
+
+/* ESCAPE TEXT */
+
+function escapeHTML(value){
+
+return String(value).replace(/[&<>"']/g,c=>({
+"&":"&amp;",
+"<":"&lt;",
+">":"&gt;",
+'"':"&quot;",
+"'":"&#39;"
+}[c]));
+
+}
+
+/* FILE UPLOAD */
+
+async function uploadFiles(){
+
+let input=document.getElementById("fileInput");
+let files=input.files;
+
+if(!files.length){
+alert("Please select files!");
+return;
+}
+
+let tx=db.transaction("files","readwrite");
+let store=tx.objectStore("files");
+
+for(let file of files){
+
+store.add({
+name:file.name,
+type:file.type,
+size:file.size,
+date:new Date().toISOString(),
+blob:file
+});
+
+}
+
+tx.oncomplete=()=>{
+
+input.value="";
+alert("Files Uploaded Successfully!");
+
+loadFiles();
+
+};
+
+tx.onerror=()=>{
+alert("Upload Failed. Storage may be full.");
+};
+
+}
+
+/* GET FILES */
+
+function getAllFiles(){
+
+return new Promise((resolve,reject)=>{
+
+let tx=db.transaction("files","readonly");
+let request=tx.objectStore("files").getAll();
+
+request.onsuccess=()=>resolve(request.result);
+request.onerror=()=>reject(request.error);
+
+});
+
+}
+
+async function getFile(id){
+
+let files=await getAllFiles();
+return files.find(f=>f.id===id);
+
+}
+
+/* LOAD FILES */
+
+async function loadFiles(){
+
+if(!db)return;
+
+let files=await getAllFiles();
+
+let search=document.getElementById("fileSearch").value.toLowerCase();
+
+let filtered=files.filter(f=>
+f.name.toLowerCase().includes(search)
+);
+
+let html="";
+
+filtered.forEach(f=>{
+
+html+=`
+<div class="item">
+
+<b>📄 ${escapeHTML(f.name)}</b>
+
+<p class="small">
+${escapeHTML(f.type||"Unknown File")} |
+${(f.size/1024/1024).toFixed(2)} MB
+</p>
+
+<p class="small">${escapeHTML(f.date.slice(0,10))}</p>
+
+<button onclick="viewFile(${f.id})">👁 View</button>
+
+<button class="green" onclick="downloadFile(${f.id})">
+⬇ Download
+</button>
+
+<button class="orange" onclick="printFile(${f.id})">
+🖨 Print
+</button>
+
+<button class="gray" onclick="renameFile(${f.id})">
+✏ Rename
+</button>
+
+<button class="red" onclick="deleteFile(${f.id})">
+🗑 Delete
+</button>
+
+</div>`;
+
+});
+
+document.getElementById("fileList").innerHTML=
+html||"No Files Found.";
+
+document.getElementById("fileCount").innerText=files.length;
+
+document.getElementById("totalFiles").innerText=files.length;
+
+let size=files.reduce((a,b)=>a+b.size,0);
+
+document.getElementById("storageUsed").innerText=
+(size/1024/1024).toFixed(2)+" MB";
+
+}
+
+/* VIEW FILE */
+
+async function viewFile(id){
+
+let f=await getFile(id);
+if(!f)return;
+
+let url=URL.createObjectURL(f.blob);
+let w=window.open("","_blank");
+
+if(!w){
+URL.revokeObjectURL(url);
+return alert("Allow pop-ups to view files.");
+}
+
+if(f.type.startsWith("image/")){
+
+w.document.write(`
+<img src="${url}" style="max-width:100%">
+`);
+
+}else if(f.type.startsWith("video/")){
+
+w.document.write(`
+<video src="${url}" controls autoplay
+style="max-width:100%;max-height:95vh"></video>
+`);
+
+}else if(f.type.startsWith("audio/")){
+
+w.document.write(`
+<audio src="${url}" controls></audio>
+`);
+
+}else if(f.type==="application/pdf"){
+
+w.document.write(`
+<iframe src="${url}" style="width:100%;height:95vh;border:0"></iframe>
+`);
+
+}else{
+
+w.close();
+URL.revokeObjectURL(url);
+
+return alert("Preview not supported. Please Download this file.");
+
+}
+
+setTimeout(()=>URL.revokeObjectURL(url),120000);
+
+}
+
+/* DOWNLOAD */
+
+async function downloadFile(id){
+
+let f=await getFile(id);
+if(!f)return;
+
+let url=URL.createObjectURL(f.blob);
+
+let a=document.createElement("a");
+a.href=url;
+a.download=f.name;
+document.body.appendChild(a);
+a.click();
+a.remove();
+
+setTimeout(()=>URL.revokeObjectURL(url),10000);
+
+}
+
+/* PRINT */
+
+async function printFile(id){
+
+let f=await getFile(id);
+if(!f)return;
+
+if(!f.type.startsWith("image/")&&f.type!=="application/pdf"){
+alert("Only Image and PDF print supported.");
+return;
+}
+
+let url=URL.createObjectURL(f.blob);
+let w=window.open("","_blank");
+
+if(!w){
+URL.revokeObjectURL(url);
+return alert("Allow pop-ups to print.");
+}
+
+if(f.type.startsWith("image/")){
+
+w.document.write(`
+<img src="${url}" style="max-width:100%">
+`);
+
+}else{
+
+w.document.write(`
+<iframe src="${url}" style="width:100%;height:100vh;border:0"></iframe>
+`);
+
+}
+
+setTimeout(()=>{
+try{w.print();}catch(e){}
+setTimeout(()=>URL.revokeObjectURL(url),120000);
+},2000);
+
+}
+
+/* RENAME */
+
+async function renameFile(id){
+
+let f=await getFile(id);
+if(!f)return;
+
+let newName=prompt("Enter New File Name:",f.name);
+
+if(!newName||!newName.trim())return;
+
+f.name=newName.trim();
+
+let tx=db.transaction("files","readwrite");
+tx.objectStore("files").put(f);
+
+tx.oncomplete=()=>{
+alert("File Name Updated!");
+loadFiles();
+};
+
+}
+
+/* DELETE WITH PASSWORD */
+
+async function deleteFile(id){
+
+let f=await getFile(id);
+if(!f)return;
+
+let password=prompt(
+"🔐 Enter Password to Delete File:"
+);
+
+if(password===null)return;
+
+if(password.trim()===""){
+alert("Password cannot be empty!");
+return;
+}
+
+if(!confirm("Are you sure you want to delete "+f.name+"?")){
+return;
+}
+
+let tx=db.transaction("files","readwrite");
+
+tx.objectStore("files").delete(id);
+
+tx.oncomplete=()=>{
+alert("File Deleted Successfully!");
+loadFiles();
+};
+
+}
+
+/* DASHBOARD STATS */
+
+async function updateStats(){
+
+let records=getAttendance();
+
+document.getElementById("totalAtt").innerText=records.length;
+
+document.getElementById("presentAtt").innerText=
+records.filter(x=>x.status==="Present").length;
+
+if(db){
+let files=await getAllFiles();
+document.getElementById("totalFiles").innerText=files.length;
+}
+
+}
+
+/* START */
+
+openDatabase().then(()=>{
+
+document.getElementById("attDate").value=
+new Date().toISOString().slice(0,10);
+
+updateStats();
+loadFiles();
+
+}).catch(e=>{
+alert("Database Error: "+e.message);
+});
+
 </script>
 
 </body>
