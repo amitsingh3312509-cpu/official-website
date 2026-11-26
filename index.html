@@ -1,684 +1,1525 @@
 
 <!DOCTYPE html>
-<html lang="en">
+<html lang="hi">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Smart Attendance & File Manager</title>
 
 <style>
-*{box-sizing:border-box}
-body{margin:0;font-family:Arial;background:#eff4ff;color:#172554}
+*{
+  margin:0;
+  padding:0;
+  box-sizing:border-box;
+}
+body{
+  font-family:Arial,sans-serif;
+  background:#f1f5f9;
+  color:#1e293b;
+}
 header{
- background:linear-gradient(120deg,#312e81,#2563eb);
- color:white;text-align:center;padding:22px 10px
+  background:linear-gradient(120deg,#172554,#2563eb);
+  color:white;
+  padding:18px;
+  text-align:center;
 }
-header h2{margin:0}
-#liveClock{font-size:30px;font-weight:bold;margin:15px}
-#liveDate{font-size:15px}
-.container{max-width:1000px;margin:auto;padding:12px}
+header h2{font-size:21px}
+header p{font-size:12px;margin-top:6px}
+
+nav{
+  display:flex;
+  gap:7px;
+  padding:10px;
+  background:white;
+  overflow-x:auto;
+  position:sticky;
+  top:0;
+  z-index:10;
+  box-shadow:0 2px 8px #0001;
+}
+nav button{
+  border:0;
+  background:#e2e8f0;
+  color:#1e293b;
+  padding:11px 14px;
+  border-radius:8px;
+  white-space:nowrap;
+  font-weight:bold;
+}
+nav button.active{
+  background:#2563eb;
+  color:white;
+}
+.container{
+  padding:15px;
+  max-width:1100px;
+  margin:auto;
+}
+.page{display:none}
+.page.active{display:block}
+.heading{
+  font-size:21px;
+  margin:10px 0 16px;
+  color:#1e3a8a;
+}
 .card{
- background:white;padding:16px;margin-bottom:15px;
- border-radius:14px;box-shadow:0 3px 12px #0001
+  background:white;
+  padding:16px;
+  border-radius:13px;
+  margin-bottom:15px;
+  box-shadow:0 3px 12px #0000000b;
 }
-h3{color:#1d4ed8}
-input,select,button{
- width:100%;padding:12px;margin:6px 0;
- border:1px solid #cbd5e1;border-radius:8px;font-size:15px
+.stats{
+  display:grid;
+  grid-template-columns:repeat(2,1fr);
+  gap:12px;
 }
-button{background:#2563eb;color:white;border:0;font-weight:bold;cursor:pointer}
-.green{background:#15803d}
-.red{background:#dc2626}
-.orange{background:#ea580c}
-.gray{background:#475569}
-.tabs{display:flex;gap:7px;flex-wrap:wrap}
-.tabs button{flex:1;min-width:90px}
-.hidden{display:none!important}
-.stats{display:flex;gap:8px;flex-wrap:wrap}
 .stat{
- flex:1;min-width:90px;background:#eff6ff;
- padding:12px;border-radius:10px;text-align:center
+  padding:17px;
+  border-radius:12px;
+  color:white;
+  background:linear-gradient(120deg,#2563eb,#4f46e5);
 }
-.stat h2{margin:5px}
-.item{
- background:#f8fafc;border:1px solid #dbeafe;
- padding:12px;border-radius:10px;margin:10px 0;
- overflow-wrap:anywhere
+.stat h3{font-size:25px;margin-top:8px}
+.stat p{font-size:13px}
+.green{background:linear-gradient(120deg,#059669,#10b981)}
+.orange{background:linear-gradient(120deg,#ea580c,#f59e0b)}
+.purple{background:linear-gradient(120deg,#7c3aed,#a855f7)}
+
+label{
+  display:block;
+  font-size:14px;
+  font-weight:bold;
+  margin:12px 0 6px;
 }
-.item button{width:auto;padding:9px;margin:3px}
-.small{font-size:12px;color:#64748b}
-.table-wrap{overflow-x:auto}
-table{width:100%;min-width:650px;border-collapse:collapse}
-th,td{border:1px solid #94a3b8;padding:9px;text-align:center}
-th{background:#dbeafe}
-footer{text-align:center;padding:20px;color:#64748b}
+input,select,textarea{
+  width:100%;
+  padding:12px;
+  border:1px solid #cbd5e1;
+  border-radius:8px;
+  font-size:15px;
+  background:white;
+  outline:none;
+}
+input:focus,select:focus,textarea:focus{
+  border-color:#2563eb;
+}
+textarea{resize:vertical;min-height:70px}
+.btn{
+  padding:11px 15px;
+  border:0;
+  border-radius:8px;
+  color:white;
+  background:#2563eb;
+  font-weight:bold;
+  margin-top:12px;
+  cursor:pointer;
+}
+.btn-green{background:#059669}
+.btn-red{background:#dc2626}
+.btn-orange{background:#ea580c}
+.btn-gray{background:#475569}
+.btn-purple{background:#7c3aed}
+.full{width:100%}
+
+.table-wrap{
+  overflow-x:auto;
+  margin-top:12px;
+}
+table{
+  width:100%;
+  border-collapse:collapse;
+  min-width:550px;
+}
+th,td{
+  border:1px solid #e2e8f0;
+  padding:10px;
+  text-align:left;
+  font-size:13px;
+}
+th{
+  background:#dbeafe;
+  color:#1e3a8a;
+}
+.small{
+  font-size:12px;
+  color:#64748b;
+  margin-top:7px;
+}
+.badge{
+  display:inline-block;
+  padding:5px 9px;
+  background:#dbeafe;
+  color:#1d4ed8;
+  border-radius:20px;
+  font-size:12px;
+}
+.action{
+  padding:6px 9px;
+  border:0;
+  border-radius:5px;
+  color:white;
+  background:#2563eb;
+  margin:2px;
+}
+.empty{
+  text-align:center;
+  padding:20px;
+  color:#64748b;
+}
+footer{
+  text-align:center;
+  padding:20px;
+  color:#64748b;
+  font-size:13px;
+}
+.row{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:10px;
+}
+hr{
+  border:0;
+  border-top:1px solid #e2e8f0;
+  margin:15px 0;
+}
+@media(max-width:500px){
+  .stats{grid-template-columns:1fr 1fr}
+  .stat{padding:13px}
+  .stat h3{font-size:21px}
+  .row{grid-template-columns:1fr}
+}
 </style>
 </head>
 
 <body>
 
 <header>
-<h2>📁 Smart Attendance & File Manager</h2>
-<p>Student Attendance & Document System</p>
-
-<div id="liveClock">00:00:00</div>
-<div id="liveDate">Loading...</div>
-
-<button class="gray" style="max-width:150px" onclick="changeLanguage()">
-🌐 हिंदी / English
-</button>
+  <h2>📚 Smart Attendance & File Manager</h2>
+  <p>Student Management | Attendance | Documents</p>
+  <p id="liveClock">Loading Time...</p>
 </header>
+
+<nav>
+  <button class="active" onclick="showPage('dashboard',this)">🏠 Dashboard</button>
+  <button onclick="showPage('students',this)">👨‍🎓 Students</button>
+  <button onclick="showPage('attendance',this)">📋 Attendance</button>
+  <button onclick="showPage('documents',this)">📁 Documents</button>
+  <button onclick="showPage('reports',this)">📊 Reports</button>
+  <button onclick="showPage('settings',this)">⚙️ Settings</button>
+</nav>
 
 <div class="container">
 
-<!-- DASHBOARD -->
-<div class="card">
-<h3>🏠 Dashboard</h3>
-<div class="stats">
-<div class="stat">Total Attendance<h2 id="totalAtt">0</h2></div>
-<div class="stat">Present<h2 id="presentAtt">0</h2></div>
-<div class="stat">Absent<h2 id="absentAtt">0</h2></div>
-<div class="stat">Total Files<h2 id="totalFiles">0</h2></div>
+<!-- PAGE 1 DASHBOARD -->
+<section id="dashboard" class="page active">
+  <h2 class="heading">🏠 Dashboard</h2>
+
+  <div class="stats">
+    <div class="stat">
+      <p>Total Students</p>
+      <h3 id="totalStudents">0</h3>
+    </div>
+    <div class="stat green">
+      <p>Total Attendance</p>
+      <h3 id="totalAttendance">0</h3>
+    </div>
+    <div class="stat orange">
+      <p>Total Documents</p>
+      <h3 id="totalDocuments">0</h3>
+    </div>
+    <div class="stat purple">
+      <p>Today's Attendance</p>
+      <h3 id="todayAttendance">0</h3>
+    </div>
+  </div>
+
+  <div class="card" style="margin-top:15px">
+    <h3>📌 Welcome</h3>
+    <p class="small">
+      Smart Attendance & File Manager में आपका स्वागत है।
+      यहाँ Student, Attendance और Documents को मैनेज कर सकते हैं।
+    </p>
+    <hr>
+    <h3>📅 Today's Date</h3>
+    <p id="todayDate" class="small"></p>
+  </div>
+</section>
+
+<!-- PAGE 2 STUDENT MANAGEMENT -->
+<section id="students" class="page">
+  <h2 class="heading">👨‍🎓 Student Management</h2>
+
+  <div class="card">
+    <h3>➕ Add Student</h3>
+
+    <label>Student Name</label>
+    <input id="studentName" type="text" placeholder="Student का नाम">
+
+    <label>Roll Number</label>
+    <input id="studentRoll" type="text" placeholder="Roll Number">
+
+    <div class="row">
+      <div>
+        <label>Branch</label>
+        <select id="studentBranch">
+          <option value="">Select Branch</option>
+          <option>CSE</option>
+          <option>IT</option>
+          <option>ECE</option>
+          <option>ME</option>
+          <option>CE</option>
+          <option>EE</option>
+          <option>Other</option>
+        </select>
+      </div>
+      <div>
+        <label>Semester</label>
+        <select id="studentSemester">
+          <option value="">Select Semester</option>
+          <option>1st</option>
+          <option>2nd</option>
+          <option>3rd</option>
+          <option>4th</option>
+          <option>5th</option>
+          <option>6th</option>
+          <option>7th</option>
+          <option>8th</option>
+        </select>
+      </div>
+    </div>
+
+    <label>Mobile Number</label>
+    <input id="studentMobile" type="tel" placeholder="Mobile Number">
+
+    <button class="btn full" onclick="addStudent()">Save Student</button>
+  </div>
+
+  <div class="card">
+    <h3>🔍 Search Student</h3>
+    <input id="studentSearch" type="search"
+    placeholder="Name या Roll Number से खोजें"
+    oninput="loadStudents()">
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th>Name</th>
+            <th>Roll No</th>
+            <th>Branch</th>
+            <th>Semester</th>
+            <th>Action</th>
+          </tr>
+        </thead>
+        <tbody id="studentTable">
+          <tr><td colspan="5" class="empty">No Student Found</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</section>
+
+<!-- PAGE 3 ATTENDANCE -->
+<section id="attendance" class="page">
+  <h2 class="heading">📋 Attendance Management</h2>
+
+  <div class="card">
+    <h3>➕ Mark Attendance</h3>
+
+    <label>Select Student</label>
+    <select id="attendanceStudent">
+      <option value="">Select Student</option>
+    </select>
+
+    <div class="row">
+      <div>
+        <label>Date</label>
+        <input type="date" id="attendanceDate">
+      </div>
+      <div>
+        <label>Day</label>
+        <input type="text" id="attendanceDay" placeholder="Monday">
+      </div>
+    </div>
+
+    <label>Subject</label>
+    <input type="text" id="attendanceSubject" placeholder="Subject Name">
+
+    <label>Attendance Status</label>
+    <select id="attendanceStatus">
+      <option value="Present">Present</option>
+      <option value="Absent">Absent</option>
+      <option value="Late">Late</option>
+    </select>
+
+    <button class="btn btn-green full" onclick="addAttendance()">
+      Save Attendance
+    </button>
+  </div>
+
+  <div class="card">
+    <h3>📋 Attendance Records</h3>
+    <input type="search" id="attendanceSearch"
+    placeholder="Search Student / Roll / Subject"
+    oninput="loadAttendance()">
+
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th>Name</th>
+            <th>Roll</th>
+            <th>Date</th>
+            <th>Day</th>
+            <th>Subject</th>
+            <th>Status</th>
+            <th>Action</th>
+          </tr>
+        </thead>
+        <tbody id="attendanceTable">
+          <tr><td colspan="7" class="empty">No Records Found</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</section>
+
+<!-- PAGE 4 DOCUMENTS -->
+<section id="documents" class="page">
+  <h2 class="heading">📁 Document Manager</h2>
+
+  <div class="card">
+    <h3>📤 Upload Document / Photo / Video</h3>
+
+    <label>Select Student</label>
+    <select id="documentStudent">
+      <option value="">Select Student</option>
+    </select>
+
+    <label>Document Name</label>
+    <input type="text" id="documentName" placeholder="Document Name">
+
+    <label>Category</label>
+    <select id="documentCategory">
+      <option value="Document">Document</option>
+      <option value="Photo">Photo</option>
+      <option value="Video">Video</option>
+      <option value="Certificate">Certificate</option>
+      <option value="Other">Other</option>
+    </select>
+
+    <label>Select File</label>
+    <input type="file" id="documentFile">
+
+    <button class="btn btn-green full" onclick="uploadDocument()">
+      Upload File
+    </button>
+    <p class="small">
+      Files इस डिवाइस के browser storage में सेव होंगे।
+    </p>
+  </div>
+
+  <div class="card">
+    <h3>📂 Uploaded Documents</h3>
+    <input type="search" id="documentSearch"
+    placeholder="Search Document"
+    oninput="loadDocuments()">
+
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th>File Name</th>
+            <th>Student</th>
+            <th>Category</th>
+            <th>Date</th>
+            <th>Action</th>
+          </tr>
+        </thead>
+        <tbody id="documentTable">
+          <tr><td colspan="5" class="empty">No Documents Found</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</section>
+
+<!-- PAGE 5 REPORTS -->
+<section id="reports" class="page">
+  <h2 class="heading">📊 Reports</h2>
+
+  <div class="card">
+    <h3>Attendance Report</h3>
+
+    <label>From Date</label>
+    <input type="date" id="reportFrom">
+
+    <label>To Date</label>
+    <input type="date" id="reportTo">
+
+    <label>Select Student</label>
+    <select id="reportStudent">
+      <option value="">All Students</option>
+    </select>
+
+    <button class="btn full" onclick="generateReport()">
+      Generate Report
+    </button>
+
+    <button class="btn btn-green full" onclick="exportCSV()">
+      Download Excel CSV
+    </button>
+
+    <button class="btn btn-gray full" onclick="window.print()">
+      Print / Save PDF
+    </button>
+  </div>
+
+  <div class="card">
+    <h3>📋 Report Result</h3>
+    <div id="reportResult" class="empty">
+      Generate Report to see records.
+    </div>
+  </div>
+</section>
+
+<!-- PAGE 6 SETTINGS -->
+<section id="settings" class="page">
+  <h2 class="heading">⚙️ Settings</h2>
+
+  <div class="card">
+    <h3>🏫 Institute Details</h3>
+
+    <label>Institute Name</label>
+    <input type="text" id="instituteName"
+    placeholder="Institute Name">
+
+    <label>Admin Name</label>
+    <input type="text" id="adminName"
+    placeholder="Admin Name">
+
+    <label>Contact Number</label>
+    <input type="tel" id="adminPhone"
+    placeholder="Contact Number">
+
+    <button class="btn full" onclick="saveSettings()">
+      Save Settings
+    </button>
+  </div>
+
+  <div class="card">
+    <h3>💾 Data Backup</h3>
+    <p class="small">
+      अपने Student और Attendance Data का Backup बना सकते हैं।
+    </p>
+
+    <button class="btn btn-green full" onclick="backupData()">
+      Download Backup
+    </button>
+
+    <label>Restore Backup</label>
+    <input type="file" id="restoreFile" accept=".json">
+
+    <button class="btn btn-orange full" onclick="restoreData()">
+      Restore Data
+    </button>
+  </div>
+
+  <div class="card">
+    <h3>ℹ️ About Application</h3>
+    <p class="small">
+      Smart Attendance & File Manager<br>
+      Version 1.0<br>
+      Created by Amit Kumar Singh, Don Nandu🌹
+    </p>
+  </div>
+</section>
+
 </div>
-</div>
 
-<!-- MENU -->
-<div class="card">
-<div class="tabs">
-<button onclick="openTab('home')">🏠 Home</button>
-<button onclick="openTab('attendance')">📅 Attendance</button>
-<button onclick="openTab('documents')">📁 Documents</button>
-</div>
-</div>
+<footer>
+  © 2026 Smart Attendance & File Manager<br>
+  Created by Amit Kumar Singh
+</footer>
 
-<!-- HOME -->
-<div id="home" class="card">
-<h3>Welcome 👋</h3>
-<p>Smart Attendance & File Management System</p>
-<p>Manage your attendance and documents easily.</p>
-</div>
-
-<!-- ATTENDANCE -->
-<div id="attendance" class="card hidden">
-<h3>📅 Attendance Management</h3>
-
-<label>Student Name / विद्यार्थी का नाम</label>
-<input id="studentName" placeholder="Enter Student Name">
-
-<label>Roll Number / रोल नंबर</label>
-<input id="rollNo" placeholder="Enter Roll Number">
-
-<label>Date / तारीख</label>
-<input type="date" id="attDate" onchange="showDay()">
-
-<label>Day / दिन</label>
-<input id="attDay" readonly>
-
-<label>Time / समय</label>
-<input id="attTime" readonly>
-
-<label>Status / उपस्थिति</label>
-<select id="attStatus">
-<option value="Present">Present / उपस्थित</option>
-<option value="Absent">Absent / अनुपस्थित</option>
-<option value="Leave">Leave / छुट्टी</option>
-</select>
-
-<button class="green" onclick="saveAttendance()">💾 Save Attendance</button>
-<button class="orange" onclick="printAttendance()">🖨 Print Attendance</button>
-
-<h3>Attendance Records</h3>
-<input id="attSearch" placeholder="Search Name or Roll Number" oninput="loadAttendance()">
-
-<div class="table-wrap">
-<table>
-<thead>
-<tr>
-<th>Name</th>
-<th>Roll</th>
-<th>Date</th>
-<th>Day</th>
-<th>Time</th>
-<th>Status</th>
-<th>Action</th>
-</tr>
-</thead>
-<tbody id="attendanceList"></tbody>
-</table>
-</div>
-</div>
-
-<!-- DOCUMENTS -->
-<div id="documents" class="card hidden">
-<h3>📁 Upload Documents</h3>
-
-<label>Select Any Files</label>
-<input type="file" id="fileInput" multiple>
-
-<button class="green" onclick="uploadFiles()">⬆ Upload Files</button>
-
-<p class="small">
-Photo, PDF, Video, Audio, Word, Excel और अन्य फाइलें अपलोड कर सकते हैं।
-</p>
-
-<h3>📊 Storage Information</h3>
-<div class="stats">
-<div class="stat">Total Files<h2 id="fileCount">0</h2></div>
-<div class="stat">Storage Used<h2 id="storageUsed">0 MB</h2></div>
-</div>
-
-<h3>📂 My Documents</h3>
-<input id="fileSearch" placeholder="Search Files..." oninput="loadFiles()">
-<div id="fileList"></div>
-</div>
-
-</div>
-
-<footer>Created by Amit Kumar Singh,Don Nandu🌹</footer>
 
 <script>
-
-/* LIVE CLOCK */
-
-function updateClock(){
-let now=new Date();
-
-document.getElementById("liveClock").innerText=
-now.toLocaleTimeString("en-IN",{
-hour:"2-digit",minute:"2-digit",
-second:"2-digit",hour12:true
-});
-
-document.getElementById("liveDate").innerText=
-now.toLocaleDateString("en-IN",{
-weekday:"long",day:"2-digit",
-month:"long",year:"numeric"
-});
-}
-
-updateClock();
-setInterval(updateClock,1000);
-
-
-/* DATE AND TIME */
-
-function localDate(){
-let d=new Date();
-return d.getFullYear()+"-"+
-String(d.getMonth()+1).padStart(2,"0")+"-"+
-String(d.getDate()).padStart(2,"0");
-}
-
-function localTime(){
-return new Date().toLocaleTimeString("en-IN",{
-hour:"2-digit",minute:"2-digit",
-second:"2-digit",hour12:true
-});
-}
-
-function getDay(value){
-if(!value)return "";
-let p=value.split("-");
-let d=new Date(+p[0],+p[1]-1,+p[2]);
-return d.toLocaleDateString("en-US",{weekday:"long"});
-}
-
-function showDay(){
-let date=document.getElementById("attDate").value;
-document.getElementById("attDay").value=getDay(date);
-}
-
-/* DATABASE */
+/* ==================================
+   SMART ATTENDANCE & FILE MANAGER
+   PART 2 - JAVASCRIPT
+================================== */
 
 let db;
 
-function openDatabase(){
-return new Promise((resolve,reject)=>{
-let request=indexedDB.open("SmartFileManager",1);
+/* DATABASE */
+const request = indexedDB.open("SmartAttendanceDB", 1);
 
-request.onupgradeneeded=e=>{
-let database=e.target.result;
-if(!database.objectStoreNames.contains("files")){
-database.createObjectStore("files",{
-keyPath:"id",autoIncrement:true
-});
-}
+request.onupgradeneeded = function(e){
+  db = e.target.result;
+
+  if(!db.objectStoreNames.contains("students")){
+    db.createObjectStore("students",{
+      keyPath:"id",
+      autoIncrement:true
+    });
+  }
+
+  if(!db.objectStoreNames.contains("attendance")){
+    db.createObjectStore("attendance",{
+      keyPath:"id",
+      autoIncrement:true
+    });
+  }
+
+  if(!db.objectStoreNames.contains("files")){
+    db.createObjectStore("files",{
+      keyPath:"id",
+      autoIncrement:true
+    });
+  }
 };
 
-request.onsuccess=e=>{
-db=e.target.result;
-resolve();
+request.onsuccess = function(e){
+  db = e.target.result;
+  loadStudents();
+  loadAttendance();
+  loadDocuments();
+  updateDashboard();
+  updateStudentOptions();
+  setToday();
 };
 
-request.onerror=()=>reject(request.error);
-});
+request.onerror = function(){
+  alert("Database open nahi ho paya!");
+};
+
+/* DATABASE HELPERS */
+function getAll(store,callback){
+  if(!db) return;
+
+  let tx = db.transaction(store,"readonly");
+  let req = tx.objectStore(store).getAll();
+
+  req.onsuccess = function(){
+    callback(req.result || []);
+  };
 }
 
-/* COMMON */
+function addData(store,data,callback){
+  let tx = db.transaction(store,"readwrite");
+  tx.objectStore(store).add(data);
 
-function openTab(id){
-["home","attendance","documents"].forEach(x=>{
-document.getElementById(x).classList.add("hidden");
-});
+  tx.oncomplete = function(){
+    if(callback) callback();
+  };
 
-document.getElementById(id).classList.remove("hidden");
-
-if(id==="attendance")loadAttendance();
-if(id==="documents")loadFiles();
-updateStats();
+  tx.onerror = function(){
+    alert("Data save nahi hua!");
+  };
 }
 
-function escapeHTML(value){
-return String(value).replace(/[&<>"']/g,c=>({
-"&":"&amp;","<":"&lt;",">":"&gt;",
-'"':"&quot;","'":"&#39;"
-}[c]));
+function deleteData(store,id,callback){
+  let tx = db.transaction(store,"readwrite");
+  tx.objectStore(store).delete(Number(id));
+
+  tx.oncomplete = function(){
+    if(callback) callback();
+  };
 }
 
-/* LANGUAGE */
+function updateData(store,data,callback){
+  let tx = db.transaction(store,"readwrite");
+  tx.objectStore(store).put(data);
 
-let hindi=false;
+  tx.oncomplete = function(){
+    if(callback) callback();
+  };
+}
 
-function changeLanguage(){
-hindi=!hindi;
-document.querySelector("header p").innerText=
-hindi?"विद्यार्थी उपस्थिति और दस्तावेज प्रणाली":
-"Student Attendance & Document System";
+/* PAGE NAVIGATION */
+function showPage(page,button){
+  document.querySelectorAll(".page").forEach(p=>{
+    p.classList.remove("active");
+  });
 
-document.querySelector("#home p").innerText=
-hindi?"अपनी उपस्थिति और दस्तावेज आसानी से मैनेज करें।":
-"Manage your attendance and documents easily.";
+  document.querySelectorAll("nav button").forEach(b=>{
+    b.classList.remove("active");
+  });
+
+  document.getElementById(page).classList.add("active");
+
+  if(button) button.classList.add("active");
+
+  if(page==="students") loadStudents();
+  if(page==="attendance") loadAttendance();
+  if(page==="documents") loadDocuments();
+  if(page==="dashboard") updateDashboard();
+}
+
+/* DATE AND LIVE CLOCK */
+function setToday(){
+  let now = new Date();
+  let date = now.toISOString().split("T")[0];
+
+  document.getElementById("attendanceDate").value = date;
+  document.getElementById("todayDate").innerText =
+    now.toLocaleDateString("en-IN",{
+      weekday:"long",
+      day:"numeric",
+      month:"long",
+      year:"numeric"
+    });
+
+  setDay();
+}
+
+function setDay(){
+  let value = document.getElementById("attendanceDate").value;
+
+  if(value){
+    let d = new Date(value+"T00:00:00");
+    document.getElementById("attendanceDay").value =
+      d.toLocaleDateString("en-IN",{weekday:"long"});
+  }
+}
+
+document.getElementById("attendanceDate")
+.addEventListener("change",setDay);
+
+function updateClock(){
+  let now = new Date();
+
+  document.getElementById("liveClock").innerText =
+    now.toLocaleDateString("en-IN")+" | "+
+    now.toLocaleTimeString("en-IN");
+}
+
+setInterval(updateClock,1000);
+updateClock();
+
+/* SAFE HTML TEXT */
+function safe(value){
+  return String(value ?? "").replace(/[&<>"']/g,function(ch){
+    return {
+      "&":"&amp;",
+      "<":"&lt;",
+      ">":"&gt;",
+      '"':"&quot;",
+      "'":"&#39;"
+    }[ch];
+  });
+}
+
+/* STUDENT MANAGEMENT */
+function addStudent(){
+  let name = document.getElementById("studentName").value.trim();
+  let roll = document.getElementById("studentRoll").value.trim();
+  let branch = document.getElementById("studentBranch").value;
+  let semester = document.getElementById("studentSemester").value;
+  let mobile = document.getElementById("studentMobile").value.trim();
+
+  if(!name || !roll || !branch || !semester){
+    alert("Please fill all required fields!");
+    return;
+  }
+
+  getAll("students",students=>{
+    let exists = students.some(s=>
+      s.roll.toLowerCase()===roll.toLowerCase()
+    );
+
+    if(exists){
+      alert("Ye Roll Number pehle se hai!");
+      return;
+    }
+
+    addData("students",{
+      name,roll,branch,semester,mobile
+    },()=>{
+      alert("Student Successfully Added!");
+
+      document.getElementById("studentName").value="";
+      document.getElementById("studentRoll").value="";
+      document.getElementById("studentBranch").value="";
+      document.getElementById("studentSemester").value="";
+      document.getElementById("studentMobile").value="";
+
+      loadStudents();
+      updateStudentOptions();
+      updateDashboard();
+    });
+  });
+}
+
+function loadStudents(){
+  if(!db) return;
+
+  getAll("students",students=>{
+    let search = document.getElementById("studentSearch").value.toLowerCase();
+
+    let filtered = students.filter(s=>
+      s.name.toLowerCase().includes(search) ||
+      s.roll.toLowerCase().includes(search)
+    );
+
+    let html="";
+
+    filtered.forEach(s=>{
+      html+=`
+      <tr>
+        <td>${safe(s.name)}</td>
+        <td>${safe(s.roll)}</td>
+        <td>${safe(s.branch)}</td>
+        <td>${safe(s.semester)}</td>
+        <td>
+          <button class="action" onclick="editStudent(${s.id})">Edit</button>
+          <button class="action" style="background:#dc2626"
+          onclick="deleteStudent(${s.id})">Delete</button>
+        </td>
+      </tr>`;
+    });
+
+    document.getElementById("studentTable").innerHTML =
+      html || '<tr><td colspan="5" class="empty">No Student Found</td></tr>';
+
+    document.getElementById("totalStudents").innerText=students.length;
+  });
+}
+
+function editStudent(id){
+  getAll("students",students=>{
+    let s=students.find(x=>x.id===id);
+    if(!s) return;
+
+    let name=prompt("Student Name:",s.name);
+    if(name===null) return;
+
+    let mobile=prompt("Mobile Number:",s.mobile || "");
+    if(mobile===null) return;
+
+    name=name.trim();
+    if(!name){
+      alert("Name cannot be empty!");
+      return;
+    }
+
+    s.name=name;
+    s.mobile=mobile.trim();
+
+    updateData("students",s,()=>{
+      alert("Student Updated!");
+      loadStudents();
+      updateStudentOptions();
+    });
+  });
+}
+
+function deleteStudent(id){
+  if(!confirm("Kya aap is student ko delete karna chahte hain?")) return;
+
+  deleteData("students",id,()=>{
+    loadStudents();
+    updateStudentOptions();
+    updateDashboard();
+    alert("Student Deleted!");
+  });
+}
+
+/* STUDENT DROPDOWNS */
+function updateStudentOptions(){
+  if(!db) return;
+
+  getAll("students",students=>{
+    let options='<option value="">Select Student</option>';
+    let report='<option value="">All Students</option>';
+
+    students.forEach(s=>{
+      let label=s.name+" ("+s.roll+")";
+
+      options+=`<option value="${s.id}">${safe(label)}</option>`;
+      report+=`<option value="${s.id}">${safe(label)}</option>`;
+    });
+
+    document.getElementById("attendanceStudent").innerHTML=options;
+    document.getElementById("documentStudent").innerHTML=options;
+    document.getElementById("reportStudent").innerHTML=report;
+  });
 }
 
 /* ATTENDANCE */
+function addAttendance(){
+  let studentId=Number(document.getElementById("attendanceStudent").value);
+  let date=document.getElementById("attendanceDate").value;
+  let day=document.getElementById("attendanceDay").value;
+  let subject=document.getElementById("attendanceSubject").value.trim();
+  let status=document.getElementById("attendanceStatus").value;
 
-function getAttendance(){
-return JSON.parse(localStorage.getItem("attendanceData")||"[]");
-}
+  if(!studentId || !date || !subject){
+    alert("Please fill all attendance details!");
+    return;
+  }
 
-function saveAttendance(){
+  getAll("students",students=>{
+    let student=students.find(s=>s.id===studentId);
 
-let name=document.getElementById("studentName").value.trim();
-let roll=document.getElementById("rollNo").value.trim();
-let date=document.getElementById("attDate").value;
-let day=getDay(date);
-let time=localTime();
-let status=document.getElementById("attStatus").value;
+    if(!student){
+      alert("Student not found!");
+      return;
+    }
 
-if(!name||!roll||!date){
-alert("Please fill all fields!");
-return;
-}
+    let data={
+      studentId,
+      name:student.name,
+      roll:student.roll,
+      date,
+      day,
+      subject,
+      status,
+      time:new Date().toLocaleTimeString("en-IN")
+    };
 
-let records=getAttendance();
+    addData("attendance",data,()=>{
+      alert("Attendance Saved Successfully!");
 
-let existing=records.find(x=>x.roll===roll&&x.date===date);
-
-if(existing){
-existing.name=name;
-existing.day=day;
-existing.time=time;
-existing.status=status;
-}else{
-records.push({
-name,roll,date,day,time,status
-});
-}
-
-localStorage.setItem("attendanceData",JSON.stringify(records));
-
-document.getElementById("attDay").value=day;
-document.getElementById("attTime").value=time;
-
-alert("Attendance Saved Successfully!");
-loadAttendance();
-updateStats();
+      document.getElementById("attendanceSubject").value="";
+      loadAttendance();
+      updateDashboard();
+    });
+  });
 }
 
 function loadAttendance(){
+  if(!db) return;
 
-let records=getAttendance();
-let search=document.getElementById("attSearch").value.toLowerCase();
-let html="";
+  getAll("attendance",records=>{
+    let search=document.getElementById("attendanceSearch").value.toLowerCase();
 
-records.forEach((x,i)=>{
+    let filtered=records.filter(r=>
+      (r.name+" "+r.roll+" "+r.subject+" "+r.status)
+      .toLowerCase().includes(search)
+    );
 
-if(!x.name.toLowerCase().includes(search)&&
-!x.roll.toLowerCase().includes(search))return;
+    let html="";
 
-html+=`
-<tr>
-<td>${escapeHTML(x.name)}</td>
-<td>${escapeHTML(x.roll)}</td>
-<td>${escapeHTML(x.date)}</td>
-<td>${escapeHTML(x.day||getDay(x.date))}</td>
-<td>${escapeHTML(x.time||"-")}</td>
-<td>${escapeHTML(x.status)}</td>
-<td><button class="red" onclick="deleteAttendance(${i})">Delete</button></td>
-</tr>`;
-});
+    filtered.reverse().forEach(r=>{
+      html+=`
+      <tr>
+        <td>${safe(r.name)}</td>
+        <td>${safe(r.roll)}</td>
+        <td>${safe(r.date)}</td>
+        <td>${safe(r.day)}</td>
+        <td>${safe(r.subject)}</td>
+        <td><span class="badge">${safe(r.status)}</span></td>
+        <td>
+          <button class="action" style="background:#dc2626"
+          onclick="deleteAttendance(${r.id})">Delete</button>
+        </td>
+      </tr>`;
+    });
 
-document.getElementById("attendanceList").innerHTML=
-html||'<tr><td colspan="7">No Records Found</td></tr>';
+    document.getElementById("attendanceTable").innerHTML =
+      html || '<tr><td colspan="7" class="empty">No Records Found</td></tr>';
+
+    document.getElementById("totalAttendance").innerText=records.length;
+  });
 }
 
-function deleteAttendance(i){
-if(!confirm("Delete Attendance?"))return;
+function deleteAttendance(id){
+  if(!confirm("Delete this attendance record?")) return;
 
-let records=getAttendance();
-records.splice(i,1);
-localStorage.setItem("attendanceData",JSON.stringify(records));
-
-loadAttendance();
-updateStats();
+  deleteData("attendance",id,()=>{
+    loadAttendance();
+    updateDashboard();
+  });
 }
 
-/* PRINT ATTENDANCE */
+/* DOCUMENT UPLOAD */
+function uploadDocument(){
+  let studentId=Number(document.getElementById("documentStudent").value);
+  let name=document.getElementById("documentName").value.trim();
+  let category=document.getElementById("documentCategory").value;
+  let file=document.getElementById("documentFile").files[0];
 
-function printAttendance(){
+  if(!studentId || !file){
+    alert("Please select student and file!");
+    return;
+  }
 
-let records=getAttendance();
+  getAll("students",students=>{
+    let student=students.find(s=>s.id===studentId);
 
-let rows=records.map(x=>`
-<tr>
-<td>${escapeHTML(x.name)}</td>
-<td>${escapeHTML(x.roll)}</td>
-<td>${escapeHTML(x.date)}</td>
-<td>${escapeHTML(x.day||getDay(x.date))}</td>
-<td>${escapeHTML(x.time||"-")}</td>
-<td>${escapeHTML(x.status)}</td>
-</tr>
-`).join("");
+    if(!student) return;
 
-let w=window.open("","_blank");
-if(!w)return alert("Allow pop-ups to print.");
+    let data={
+      name:name || file.name,
+      studentId,
+      studentName:student.name,
+      roll:student.roll,
+      category,
+      fileName:file.name,
+      fileType:file.type,
+      fileSize:file.size,
+      file:file,
+      date:new Date().toLocaleDateString("en-IN")
+    };
 
-w.document.write(`
-<html>
-<head>
-<title>Attendance Report</title>
-<style>
-body{font-family:Arial;padding:15px}
-h2{text-align:center}
-table{width:100%;border-collapse:collapse}
-th,td{border:1px solid black;padding:9px;text-align:center}
-th{background:#e2e8f0}
-</style>
-</head>
-<body>
-<h2>Attendance Report</h2>
-<p>Report Date: ${localDate()}</p>
-<p>Report Time: ${localTime()}</p>
-<table>
-<tr>
-<th>Name</th><th>Roll</th><th>Date</th>
-<th>Day</th><th>Time</th><th>Status</th>
-</tr>
-${rows}
-</table>
-</body>
-</html>
-`);
+    addData("files",data,()=>{
+      alert("File Uploaded Successfully!");
 
-w.document.close();
-w.onload=()=>w.print();
+      document.getElementById("documentName").value="";
+      document.getElementById("documentFile").value="";
+
+      loadDocuments();
+      updateDashboard();
+    });
+  });
 }
 
-/* FILE UPLOAD */
+/* DOCUMENT LIST */
+function loadDocuments(){
+  if(!db) return;
 
-async function uploadFiles(){
+  getAll("files",files=>{
+    let search=document.getElementById("documentSearch").value.toLowerCase();
 
-let input=document.getElementById("fileInput");
-let files=input.files;
+    let filtered=files.filter(f=>
+      (f.name+" "+f.studentName+" "+f.category)
+      .toLowerCase().includes(search)
+    );
 
-if(!files.length)return alert("Please select files!");
+    let html="";
 
-let tx=db.transaction("files","readwrite");
-let store=tx.objectStore("files");
+    filtered.reverse().forEach(f=>{
+      html+=`
+      <tr>
+        <td>${safe(f.name)}</td>
+        <td>${safe(f.studentName)}</td>
+        <td>${safe(f.category)}</td>
+        <td>${safe(f.date)}</td>
+        <td>
+          <button class="action" onclick="viewFile(${f.id})">View</button>
+          <button class="action" style="background:#059669"
+          onclick="downloadFile(${f.id})">Download</button>
+          <button class="action" style="background:#7c3aed"
+          onclick="renameFile(${f.id})">Rename</button>
+          <button class="action" style="background:#dc2626"
+          onclick="deleteFile(${f.id})">Delete</button>
+        </td>
+      </tr>`;
+    });
 
-for(let file of files){
-store.add({
-name:file.name,
-type:file.type,
-size:file.size,
-date:new Date().toISOString(),
-blob:file
-});
+    document.getElementById("documentTable").innerHTML =
+      html || '<tr><td colspan="5" class="empty">No Documents Found</td></tr>';
+
+    document.getElementById("totalDocuments").innerText=files.length;
+  });
 }
 
-tx.oncomplete=()=>{
-input.value="";
-alert("Files Uploaded Successfully!");
-loadFiles();
-};
+/* GET ONE FILE */
+function getFile(id,callback){
+  let tx=db.transaction("files","readonly");
+  let req=tx.objectStore("files").get(Number(id));
 
-tx.onerror=()=>alert("Upload Failed. Storage may be full.");
+  req.onsuccess=()=>callback(req.result);
 }
 
-/* GET FILES */
+/* VIEW FILE */
+function viewFile(id){
+  getFile(id,f=>{
+    if(!f || !f.file){
+      alert("File Not Found!");
+      return;
+    }
 
-function getAllFiles(){
-return new Promise((resolve,reject)=>{
-let tx=db.transaction("files","readonly");
-let request=tx.objectStore("files").getAll();
+    let url=URL.createObjectURL(f.file);
+    let win=window.open(url,"_blank");
 
-request.onsuccess=()=>resolve(request.result);
-request.onerror=()=>reject(request.error);
-});
+    if(!win){
+      alert("Browser popup allow karein ya Download option use karein.");
+    }
+
+    setTimeout(()=>URL.revokeObjectURL(url),60000);
+  });
 }
 
-async function getFile(id){
-let files=await getAllFiles();
-return files.find(f=>f.id===id);
+/* DOWNLOAD FILE */
+function downloadFile(id){
+  getFile(id,f=>{
+    if(!f || !f.file) return;
+
+    let url=URL.createObjectURL(f.file);
+    let a=document.createElement("a");
+
+    a.href=url;
+    a.download=f.fileName || f.name;
+    a.click();
+
+    setTimeout(()=>URL.revokeObjectURL(url),1000);
+  });
 }
 
-/* LOAD FILES */
+/* RENAME FILE */
+function renameFile(id){
+  getFile(id,f=>{
+    if(!f) return;
 
-async function loadFiles(){
+    let name=prompt("New Document Name:",f.name);
+    if(name===null) return;
 
-if(!db)return;
+    name=name.trim();
+    if(!name){
+      alert("Name cannot be empty!");
+      return;
+    }
 
-let files=await getAllFiles();
-let search=document.getElementById("fileSearch").value.toLowerCase();
+    f.name=name;
 
-let filtered=files.filter(f=>f.name.toLowerCase().includes(search));
-let html="";
-
-filtered.forEach(f=>{
-html+=`
-<div class="item">
-<b>📄 ${escapeHTML(f.name)}</b>
-<p class="small">
-${escapeHTML(f.type||"Unknown File")} |
-${(f.size/1024/1024).toFixed(2)} MB
-</p>
-<p class="small">${escapeHTML(f.date.slice(0,10))}</p>
-
-<button onclick="viewFile(${f.id})">👁 View</button>
-<button class="green" onclick="downloadFile(${f.id})">⬇ Download</button>
-<button class="orange" onclick="printFile(${f.id})">🖨 Print</button>
-<button class="gray" onclick="renameFile(${f.id})">✏ Rename</button>
-<button class="red" onclick="deleteFile(${f.id})">🗑 Delete</button>
-</div>`;
-});
-
-document.getElementById("fileList").innerHTML=html||"No Files Found.";
-
-document.getElementById("fileCount").innerText=files.length;
-document.getElementById("totalFiles").innerText=files.length;
-
-let size=files.reduce((a,b)=>a+b.size,0);
-document.getElementById("storageUsed").innerText=
-(size/1024/1024).toFixed(2)+" MB";
+    updateData("files",f,()=>{
+      alert("Document Renamed!");
+      loadDocuments();
+    });
+  });
 }
 
-/* VIEW */
+/* DELETE FILE */
+function deleteFile(id){
+  let username=prompt("Delete karne ke liye apna naam likhein:");
+  if(username===null || !username.trim()) return;
 
-async function viewFile(id){
+  let password=prompt("Delete confirmation ke liye koi password likhein:");
+  if(password===null || !password.trim()) return;
 
-let f=await getFile(id);
-if(!f)return;
+  if(!confirm("Kya aap sach mein is document ko delete karna chahte hain?")) return;
 
-let url=URL.createObjectURL(f.blob);
-let w=window.open("","_blank");
-
-if(!w){
-URL.revokeObjectURL(url);
-return alert("Allow pop-ups to view files.");
-}
-
-if(f.type.startsWith("image/")){
-w.document.write(`<img src="${url}" style="max-width:100%">`);
-}
-else if(f.type.startsWith("video/")){
-w.document.write(`<video src="${url}" controls autoplay style="max-width:100%;max-height:95vh"></video>`);
-}
-else if(f.type.startsWith("audio/")){
-w.document.write(`<audio src="${url}" controls></audio>`);
-}
-else if(f.type==="application/pdf"){
-w.document.write(`<iframe src="${url}" style="width:100%;height:95vh;border:0"></iframe>`);
-}
-else{
-w.close();
-URL.revokeObjectURL(url);
-return alert("Preview not supported. Please Download.");
-}
-
-setTimeout(()=>URL.revokeObjectURL(url),300000);
-}
-
-/* DOWNLOAD */
-
-async function downloadFile(id){
-
-let f=await getFile(id);
-if(!f)return;
-
-let url=URL.createObjectURL(f.blob);
-let a=document.createElement("a");
-
-a.href=url;
-a.download=f.name;
-document.body.appendChild(a);
-a.click();
-a.remove();
-
-setTimeout(()=>URL.revokeObjectURL(url),10000);
-}
-
-/* PRINT FILE */
-
-async function printFile(id){
-
-let f=await getFile(id);
-if(!f)return;
-
-if(!f.type.startsWith("image/")&&f.type!=="application/pdf"){
-return alert("Only Image and PDF print supported.");
-}
-
-let url=URL.createObjectURL(f.blob);
-let w=window.open("","_blank");
-
-if(!w){
-URL.revokeObjectURL(url);
-return alert("Allow pop-ups to print.");
-}
-
-if(f.type.startsWith("image/")){
-w.document.write(`<img src="${url}" style="max-width:100%">`);
-}else{
-w.document.write(`<iframe src="${url}" style="width:100%;height:100vh;border:0"></iframe>`);
-}
-
-setTimeout(()=>{
-try{w.print();}catch(e){}
-setTimeout(()=>URL.revokeObjectURL(url),120000);
-},2000);
-}
-
-/* RENAME */
-
-async function renameFile(id){
-
-let f=await getFile(id);
-if(!f)return;
-
-let name=prompt("Enter New File Name:",f.name);
-if(!name||!name.trim())return;
-
-f.name=name.trim();
-
-let tx=db.transaction("files","readwrite");
-tx.objectStore("files").put(f);
-
-tx.oncomplete=()=>{
-alert("File Name Updated!");
-loadFiles();
-};
-}
-
-/* DELETE WITH PASSWORD CONFIRMATION */
-
-async function deleteFile(id){
-
-let f=await getFile(id);
-if(!f)return;
-
-let password=prompt("Enter Password to Delete File:");
-
-if(password===null)return;
-
-if(password.trim()===""){
-alert("Password cannot be empty!");
-return;
-}
-
-if(!confirm("Are you sure you want to delete "+f.name+"?"))return;
-
-let tx=db.transaction("files","readwrite");
-tx.objectStore("files").delete(id);
-
-tx.oncomplete=()=>{
-alert("File Deleted Successfully!");
-loadFiles();
-updateStats();
-};
-
-tx.onerror=()=>alert("Delete Failed!");
+  deleteData("files",id,()=>{
+    alert("Document Deleted!");
+    loadDocuments();
+    updateDashboard();
+  });
 }
 
 /* DASHBOARD */
+function updateDashboard(){
+  if(!db) return;
 
-async function updateStats(){
+  getAll("students",students=>{
+    document.getElementById("totalStudents").innerText=students.length;
+  });
 
-let records=getAttendance();
+  getAll("attendance",records=>{
+    document.getElementById("totalAttendance").innerText=records.length;
 
-document.getElementById("totalAtt").innerText=records.length;
-document.getElementById("presentAtt").innerText=
-records.filter(x=>x.status==="Present").length;
-document.getElementById("absentAtt").innerText=
-records.filter(x=>x.status==="Absent").length;
+    let today=new Date().toISOString().split("T")[0];
 
-if(db){
-let files=await getAllFiles();
-document.getElementById("totalFiles").innerText=files.length;
+    let count=records.filter(r=>r.date===today).length;
+
+    document.getElementById("todayAttendance").innerText=count;
+  });
+
+  getAll("files",files=>{
+    document.getElementById("totalDocuments").innerText=files.length;
+  });
 }
+     </script>
+ 
+<script>
+/* ==================================
+   PART 3 - REPORTS, SETTINGS, BACKUP
+================================== */
+
+/* ATTENDANCE REPORT */
+let currentReport = [];
+
+function generateReport(){
+
+  let from = document.getElementById("reportFrom").value;
+  let to = document.getElementById("reportTo").value;
+  let studentId = document.getElementById("reportStudent").value;
+
+  getAll("attendance", records => {
+
+    let filtered = records.filter(r => {
+
+      let dateOK = (!from || r.date >= from) &&
+                   (!to || r.date <= to);
+
+      let studentOK = !studentId ||
+                      Number(r.studentId) === Number(studentId);
+
+      return dateOK && studentOK;
+    });
+
+    currentReport = filtered;
+
+    let present = filtered.filter(r => r.status === "Present").length;
+    let absent = filtered.filter(r => r.status === "Absent").length;
+    let late = filtered.filter(r => r.status === "Late").length;
+
+    let html = `
+      <div class="stats">
+        <div class="stat">
+          <p>Total Records</p>
+          <h3>${filtered.length}</h3>
+        </div>
+        <div class="stat green">
+          <p>Present</p>
+          <h3>${present}</h3>
+        </div>
+        <div class="stat orange">
+          <p>Absent</p>
+          <h3>${absent}</h3>
+        </div>
+        <div class="stat purple">
+          <p>Late</p>
+          <h3>${late}</h3>
+        </div>
+      </div>
+
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th>Name</th>
+              <th>Roll</th>
+              <th>Date</th>
+              <th>Day</th>
+              <th>Subject</th>
+              <th>Status</th>
+            </tr>
+          </thead>
+          <tbody>
+    `;
+
+    filtered.forEach(r => {
+      html += `
+        <tr>
+          <td>${safe(r.name)}</td>
+          <td>${safe(r.roll)}</td>
+          <td>${safe(r.date)}</td>
+          <td>${safe(r.day)}</td>
+          <td>${safe(r.subject)}</td>
+          <td>${safe(r.status)}</td>
+        </tr>
+      `;
+    });
+
+    html += `
+          </tbody>
+        </table>
+      </div>
+    `;
+
+    document.getElementById("reportResult").innerHTML =
+      filtered.length ? html :
+      '<p class="empty">No Report Found</p>';
+  });
 }
 
-/* START */
+/* CSV DOWNLOAD */
+function exportCSV(){
 
-openDatabase().then(()=>{
-document.getElementById("attDate").value=localDate();
-showDay();
-document.getElementById("attTime").value=localTime();
-updateStats();
-loadFiles();
-}).catch(e=>{
-alert("Database Error: "+e.message);
-});
+  if(!currentReport.length){
+    alert("Pehle Generate Report karein!");
+    return;
+  }
 
-</script>
+  let rows = [
+    ["Name","Roll Number","Date","Day","Subject","Status","Time"]
+  ];
+
+  currentReport.forEach(r => {
+    rows.push([
+      r.name,
+      r.roll,
+      r.date,
+      r.day,
+      r.subject,
+      r.status,
+      r.time || ""
+    ]);
+  });
+
+  let csv = rows.map(row =>
+    row.map(value =>
+      '"' + String(value ?? "").replace(/"/g,'""') + '"'
+    ).join(",")
+  ).join("\n");
+
+  let blob = new Blob(
+    ["\uFEFF" + csv],
+    {type:"text/csv;charset=utf-8;"}
+  );
+
+  let url = URL.createObjectURL(blob);
+  let a = document.createElement("a");
+
+  a.href = url;
+  a.download = "Attendance_Report.csv";
+  a.click();
+
+  setTimeout(() => URL.revokeObjectURL(url),1000);
+}
+
+/* SETTINGS SAVE */
+function saveSettings(){
+
+  let settings = {
+    instituteName:
+      document.getElementById("instituteName").value.trim(),
+
+    adminName:
+      document.getElementById("adminName").value.trim(),
+
+    adminPhone:
+      document.getElementById("adminPhone").value.trim()
+  };
+
+  localStorage.setItem(
+    "smartAttendanceSettings",
+    JSON.stringify(settings)
+  );
+
+  alert("Settings Saved Successfully!");
+}
+
+/* SETTINGS LOAD */
+function loadSettings(){
+
+  let saved = localStorage.getItem(
+    "smartAttendanceSettings"
+  );
+
+  if(!saved) return;
+
+  try{
+    let s = JSON.parse(saved);
+
+    document.getElementById("instituteName").value =
+      s.instituteName || "";
+
+    document.getElementById("adminName").value =
+      s.adminName || "";
+
+    document.getElementById("adminPhone").value =
+      s.adminPhone || "";
+
+  }catch(e){
+    console.log("Settings load error",e);
+  }
+}
+
+/* BACKUP DOWNLOAD */
+function backupData(){
+
+  getAll("students",students => {
+
+    getAll("attendance",attendance => {
+
+      getAll("files",files => {
+
+        let backup = {
+          app:"Smart Attendance & File Manager",
+          version:1,
+          date:new Date().toISOString(),
+          students:students,
+          attendance:attendance,
+          settings:localStorage.getItem(
+            "smartAttendanceSettings"
+          )
+        };
+
+        let blob = new Blob(
+          [JSON.stringify(backup,null,2)],
+          {type:"application/json"}
+        );
+
+        let url = URL.createObjectURL(blob);
+        let a = document.createElement("a");
+
+        a.href = url;
+        a.download = "Smart_Attendance_Backup.json";
+        a.click();
+
+        setTimeout(() => URL.revokeObjectURL(url),1000);
+
+        alert(
+          "Backup Download Ho Gaya!\n" +
+          "Students aur Attendance save hain.\n" +
+          "Documents is backup mein shamil nahi hain."
+        );
+
+      });
+
+    });
+
+  });
+}
+
+/* RESTORE BACKUP */
+function restoreData(){
+
+  let input = document.getElementById("restoreFile");
+  let file = input.files[0];
+
+  if(!file){
+    alert("Please select backup JSON file!");
+    return;
+  }
+
+  if(!confirm(
+    "Restore karne se current Students aur Attendance replace honge. Continue?"
+  )){
+    return;
+  }
+
+  let reader = new FileReader();
+
+  reader.onload = function(e){
+
+    try{
+
+      let backup = JSON.parse(e.target.result);
+
+      if(
+        !backup ||
+        !Array.isArray(backup.students) ||
+        !Array.isArray(backup.attendance)
+      ){
+        alert("Invalid Backup File!");
+        return;
+      }
+
+      let tx = db.transaction(
+        ["students","attendance"],
+        "readwrite"
+      );
+
+      let studentStore = tx.objectStore("students");
+      let attendanceStore = tx.objectStore("attendance");
+
+      studentStore.clear();
+      attendanceStore.clear();
+
+      backup.students.forEach(s => {
+        studentStore.put(s);
+      });
+
+      backup.attendance.forEach(a => {
+        attendanceStore.put(a);
+      });
+
+      tx.oncomplete = function(){
+
+        if(backup.settings){
+          localStorage.setItem(
+            "smartAttendanceSettings",
+            backup.settings
+          );
+        }
+
+        loadStudents();
+        loadAttendance();
+        updateStudentOptions();
+        updateDashboard();
+        loadSettings();
+
+        input.value = "";
+
+        alert("Backup Restore Successfully!");
+      };
+
+      tx.onerror = function(){
+        alert("Restore Failed!");
+      };
+
+    }catch(error){
+      alert("Backup file sahi nahi hai!");
+    }
+  };
+
+  reader.readAsText(file);
+}
+
+/* PRINT REPORT */
+function printReport(){
+
+  if(!currentReport.length){
+    alert("Pehle report generate karein!");
+    return;
+  }
+
+  let html = `
+    <html>
+    <head>
+      <title>Attendance Report</title>
+      <style>
+        body{font-family:Arial;padding:20px}
+        h2{text-align:center}
+        table{width:100%;border-collapse:collapse}
+        th,td{border:1px solid #333;padding:8px;text-align:left}
+        th{background:#ddd}
+      </style>
+    </head>
+    <body>
+      <h2>Attendance Report</h2>
+      <table>
+        <tr>
+          <th>Name</th>
+          <th>Roll</th>
+          <th>Date</th>
+          <th>Day</th>
+          <th>Subject</th>
+          <th>Status</th>
+        </tr>
+  `;
+
+  currentReport.forEach(r => {
+    html += `
+      <tr>
+        <td>${safe(r.name)}</td>
+        <td>${safe(r.roll)}</td>
+        <td>${safe(r.date)}</td>
+        <td>${safe(r.day)}</td>
+        <td>${safe(r.subject)}</td>
+        <td>${safe(r.status)}</td>
+      </tr>
+    `;
+  });
+
+  html += `
+      </table>
+    </body>
+    </html>
+  `;
+
+  let win = window.open("","_blank");
+
+  if(!win){
+    alert("Popup allow karein!");
+    return;
+  }
+
+  win.document.write(html);
+  win.document.close();
+  win.onload = function(){
+    win.print();
+  };
+}
+
+/* ADD PRINT BUTTON TO REPORT */
+let reportCard = document.getElementById("reportResult");
+
+let printButton = document.createElement("button");
+printButton.className = "btn btn-gray full";
+printButton.innerText = "Print Report";
+printButton.onclick = printReport;
+
+reportCard.parentElement.appendChild(printButton);
+
+/* INITIAL SETTINGS */
+loadSettings();
+
+     </script>
+ 
 </body>
 </html>
